@@ -54,9 +54,185 @@
     margin:  5px;
     text-align: center;
 }
+
+/* ===== Menu drawer (added) ===== */
+#menuOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 90;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+}
+#menuOverlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+#menuDrawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: min(340px, 88vw);
+    background: #ffffff;
+    z-index: 91;
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 8px 0 30px rgba(0,0,0,.25);
+}
+#menuDrawer.open {
+    transform: translateX(0);
+}
+#menuDrawer .drawer-head {
+    padding: 22px 20px 16px 20px;
+    border-bottom: 1px solid rgba(0,0,0,.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#menuDrawer .drawer-body {
+    padding: 18px 20px 30px 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+#menuDrawer .drawer-section {
+    margin-bottom: 26px;
+}
+#menuDrawer label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #5B6472;
+    margin-bottom: 8px;
+}
+#menuDrawer input[type="text"],
+#menuDrawer textarea,
+#menuDrawer input[type="url"] {
+    width: 100%;
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 13.5px;
+    font-family: 'Inter', sans-serif;
+    color: #111;
+    outline: none;
+    box-sizing: border-box;
+}
+#menuDrawer input[type="text"]:focus,
+#menuDrawer textarea:focus,
+#menuDrawer input[type="url"]:focus {
+    border-color: #0B4F4A;
+}
+#menuDrawer textarea {
+    resize: vertical;
+    min-height: 70px;
+}
+.drawer-avatar-preview {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    object-fit: cover;
+    border: 1px solid rgba(0,0,0,.1);
+}
+.drawer-btn {
+    width: 100%;
+    background: #0B4F4A;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s ease;
+}
+.drawer-btn:hover {
+    background: #0e615a;
+}
+.drawer-btn-ghost {
+    width: 100%;
+    background: #f4f4f4;
+    color: #111;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 999px;
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.drawer-hint {
+    font-size: 11.5px;
+    color: #9aa1ab;
+    margin-top: 6px;
+}
+.drawer-close-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid rgba(0,0,0,.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    cursor: pointer;
+}
     </style>
 </head>
 <body>
+
+    <!-- ======================= MENU DRAWER (added) ======================= -->
+    <div id="menuOverlay" onclick="closeMenu()"></div>
+    <div id="menuDrawer">
+        <div class="drawer-head">
+            <span class="font-semibold text-[13px] tracking-[0.2em] text-black">EDIT PROFILE</span>
+            <button class="drawer-close-btn" onclick="closeMenu()" aria-label="Close menu">
+                <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="drawer-body">
+
+            <!-- Change Photo -->
+            <div class="drawer-section">
+                <label>Profile Photo</label>
+                <div class="flex items-center gap-4">
+                    <img id="drawerAvatarPreview" class="drawer-avatar-preview" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Avatar preview">
+                    <div class="flex-1">
+                        <input type="file" id="avatarInput" accept="image/*" class="hidden" onchange="handleAvatarChange(event)">
+                        <button type="button" class="drawer-btn-ghost" onclick="document.getElementById('avatarInput').click()">Choose Image</button>
+                        <p class="drawer-hint">PNG or JPG, square photos look best.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Name -->
+            <div class="drawer-section">
+                <label for="nameInput">Full Name</label>
+                <input type="text" id="nameInput" value="Ahmed Mohammed" oninput="handleNameChange(event)">
+            </div>
+
+            <!-- Edit Bio -->
+            <div class="drawer-section">
+                <label for="bioInput">Bio</label>
+                <textarea id="bioInput" oninput="handleBioChange(event)">I design clear, considered product interfaces — from early concepts to polished, shippable screens for startups and enterprise teams alike.</textarea>
+            </div>
+
+            <!-- Add New Link -->
+            <div class="drawer-section">
+                <label>Add New Link</label>
+                <input type="text" id="newLinkTitle" placeholder="Title (e.g. Dribbble)" class="mb-2">
+                <input type="text" id="newLinkDesc" placeholder="Short description" class="mb-2">
+                <input type="url" id="newLinkUrl" placeholder="https://example.com" class="mb-3">
+                <button type="button" class="drawer-btn" onclick="addNewLink()">+ Add Link</button>
+                <p class="drawer-hint">The new link will be added to your links list below.</p>
+            </div>
+
+        </div>
+    </div>
 
     <!-- ======================= MOBILE (phone card) ======================= -->
     <div class="lg:hidden flex items-center justify-center min-h-screen">
@@ -72,14 +248,14 @@
                         <span class="font-semibold text-[13px] tracking-[0.2em] text-black">PROFILE</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <button class="w-9 h-9 rounded-full border border-black/10 flex items-center justify-center hover:bg-black/[0.03] transition">
+                        <button class="w-9 h-9 rounded-full border border-black/10 flex items-center justify-center hover:bg-black/[0.03] transition" onclick="openMenu()" aria-label="Open menu">
                             <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                         </button>
 
                         <!-- Distinctive avatar: octagonal seal shape with verified badge -->
                         <div class="relative w-10 h-10">
                             <div class="avatar-seal w-10 h-10 p-[2.5px] bg-[#0B4F4A]">
-                                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Profile" class="avatar-seal w-full h-full object-cover">
+                                <img id="mobileAvatarImg" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Profile" class="avatar-seal w-full h-full object-cover">
                             </div>
                             <div class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#0B4F4A] border-[2.5px] border-white flex items-center justify-center">
                                 <svg class="w-2 h-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
@@ -102,9 +278,8 @@
                     </div>
 
                     <h1 class="font-display mt-3 text-[42px] font-medium tracking-tight text-black leading-[0.98]">
-                        Ahmed<br>
+                        <span id="mobileNameText">Ahmed<br>Mohammed</span>
                         <span class="inline-flex items-center gap-2">
-                            Mohammed
                             <svg class="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="none">
                                 <path d="M12 2.5l2.32 1.2 2.6-.62 1.31 2.32 2.32 1.31-.62 2.6.62 2.6-2.32 1.31-1.31 2.32-2.6-.62L12 21.5l-2.32-1.2-2.6.62-1.31-2.32-2.32-1.31.62-2.6-.62-2.6 2.32-1.31 1.31-2.32 2.6.62L12 2.5z" fill="#0B4F4A"/>
                                 <path d="M8.3 12.4l2.3 2.3 4.6-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -112,8 +287,8 @@
                         </span>
                     </h1>
 
-                    <p class="mt-3 text-[13.5px] leading-relaxed text-[#5B6472]">
-                        I    — from early concepts to polished, shippable screens for startups and enterprise teams alike.
+                    <p id="mobileBioText" class="mt-3 text-[13.5px] leading-relaxed text-[#5B6472]">
+                        I design clear, considered product interfaces — from early concepts to polished, shippable screens for startups and enterprise teams alike.
                     </p>
                 </div>
 
@@ -167,7 +342,7 @@
                     <span class="px-4 py-1.5 bg-gray-50 text-gray-500 border border-gray-200 rounded-full text-xs font-medium whitespace-nowrap cursor-pointer hover:bg-gray-100">Coding</span>
                 </div>
 
-                <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-4" id="mobileLinksList">
 
                     <!-- Behance / Portfolio -->
                     <a href="#" class="flex items-center group">
@@ -244,7 +419,7 @@
             <!-- Avatar + verified badge -->
             <div class="relative w-20 h-20 mb-8">
                 <div class="avatar-seal w-20 h-20 p-[3px] bg-[#0B4F4A]">
-                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Profile" class="avatar-seal w-full h-full object-cover">
+                    <img id="desktopAvatarImg" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Profile" class="avatar-seal w-full h-full object-cover">
                 </div>
                 <div class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-[#0B4F4A] border-[3px] border-white flex items-center justify-center">
                     <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
@@ -258,7 +433,7 @@
 
             <h1 class="font-display text-[36px] xl:text-[40px] font-medium tracking-tight text-black leading-[1.02]">
                 <span class="inline-flex items-center flex-wrap gap-2">
-                    Ahmed Mohammed
+                    <span id="desktopNameText">Ahmed Mohammed</span>
                     <svg class="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="none">
                         <path d="M12 2.5l2.32 1.2 2.6-.62 1.31 2.32 2.32 1.31-.62 2.6.62 2.6-2.32 1.31-1.31 2.32-2.6-.62L12 21.5l-2.32-1.2-2.6.62-1.31-2.32-2.32-1.31.62-2.6-.62-2.6 2.32-1.31 1.31-2.32 2.6.62L12 2.5z" fill="#0B4F4A"/>
                         <path d="M8.3 12.4l2.3 2.3 4.6-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -271,7 +446,7 @@
                 Available for work
             </span>
 
-            <p class="mt-6 text-[14.5px] leading-relaxed text-[#5B6472]">
+            <p id="desktopBioText" class="mt-6 text-[14.5px] leading-relaxed text-[#5B6472]">
                 I design clear, considered product interfaces — from early concepts to polished, shippable screens for startups and enterprise teams alike.
             </p>
 
@@ -324,11 +499,11 @@
                     <span class="px-4 py-1.5 bg-white text-gray-500 border border-gray-200 rounded-full text-xs font-medium whitespace-nowrap cursor-pointer hover:bg-gray-50">Coding</span>
                 </div>
 
-                <div class="flex flex-col mt-4">
+                <div class="flex flex-col mt-4" id="desktopLinksList">
 
                     <!-- 01 Behance -->
                     <a href="#" class="group flex items-center gap-6 py-7 border-b border-black/10 hover:pl-3 transition-[padding] duration-300">
-                        <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0">01</span>
+                        <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0 link-index">01</span>
                         <div class="w-12 h-12 bg-[#E3E8FF] text-[#0057ff] rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14h-8.027c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.226-2.477-2.226-1.48 0-2.352.836-2.488 2.226zm-9.351 4h-6.689v-14h7.02c3.486 0 5.064 1.583 5.064 3.784 0 1.503-.941 2.809-2.473 3.336 1.637.491 2.852 1.848 2.852 3.593 0 2.261-1.758 3.287-5.774 3.287zm-2.839-8.498h3.335c1.472 0 2.353-.615 2.353-1.87 0-1.282-.932-1.845-2.261-1.845h-3.427v3.715zm0 5.498h3.692c1.789 0 2.868-.691 2.868-2.188 0-1.423-1.079-2.096-2.812-2.096h-3.748v4.284z"/></svg>
                         </div>
@@ -341,7 +516,7 @@
 
                     <!-- 02 LinkedIn -->
                     <a href="#" class="group flex items-center gap-6 py-7 border-b border-black/10 hover:pl-3 transition-[padding] duration-300">
-                        <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0">02</span>
+                        <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0 link-index">02</span>
                         <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                         </div>
@@ -354,7 +529,7 @@
 
                     <!-- 03 Instagram -->
                     <a href="#" class="group flex items-center gap-6 py-7 border-b border-black/10 hover:pl-3 transition-[padding] duration-300">
-                        <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0">03</span>
+                        <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0 link-index">03</span>
                         <div class="w-12 h-12 bg-pink-50 text-pink-600 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                         </div>
@@ -367,7 +542,7 @@
 
                     <!-- 04 X (Twitter) -->
                     <a href="#" class="group flex items-center gap-6 py-7 border-b border-black/10 hover:pl-3 transition-[padding] duration-300">
-                        <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0">04</span>
+                        <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0 link-index">04</span>
                         <div class="w-12 h-12 bg-gray-100 text-black rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                         </div>
@@ -382,6 +557,121 @@
             </div>
         </main>
     </div>
+
+    <script>
+        // ===== Menu open/close =====
+        function openMenu() {
+            document.getElementById('menuOverlay').classList.add('open');
+            document.getElementById('menuDrawer').classList.add('open');
+        }
+        function closeMenu() {
+            document.getElementById('menuOverlay').classList.remove('open');
+            document.getElementById('menuDrawer').classList.remove('open');
+        }
+
+        // ===== Change photo =====
+        function handleAvatarChange(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const dataUrl = e.target.result;
+                document.getElementById('drawerAvatarPreview').src = dataUrl;
+                document.getElementById('mobileAvatarImg').src = dataUrl;
+                document.getElementById('desktopAvatarImg').src = dataUrl;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ===== Edit name =====
+        function handleNameChange(event) {
+            const value = event.target.value.trim() || 'Ahmed Mohammed';
+            document.getElementById('desktopNameText').textContent = value;
+
+            // Mobile keeps the two-line big-title look: split into first word / rest
+            const parts = value.split(' ');
+            const first = parts.shift();
+            const rest = parts.join(' ');
+            const mobileEl = document.getElementById('mobileNameText');
+            mobileEl.innerHTML = rest ? (first + '<br>' + rest) : first;
+        }
+
+        // ===== Edit bio =====
+        function handleBioChange(event) {
+            const value = event.target.value;
+            document.getElementById('mobileBioText').textContent = value;
+            document.getElementById('desktopBioText').textContent = value;
+        }
+
+        // ===== Add new link =====
+        function addNewLink() {
+            const titleInput = document.getElementById('newLinkTitle');
+            const descInput = document.getElementById('newLinkDesc');
+            const urlInput = document.getElementById('newLinkUrl');
+
+            const title = titleInput.value.trim();
+            const desc = descInput.value.trim() || 'Added link';
+            const url = urlInput.value.trim() || '#';
+
+            if (!title) {
+                titleInput.focus();
+                return;
+            }
+
+            // --- Append to mobile list ---
+            const mobileList = document.getElementById('mobileLinksList');
+            const mobileItem = document.createElement('a');
+            mobileItem.href = url;
+            mobileItem.target = '_blank';
+            mobileItem.rel = 'noopener noreferrer';
+            mobileItem.className = 'flex items-center group';
+            mobileItem.innerHTML = `
+                <div class="w-12 h-12 bg-gray-100 text-[#0B4F4A] rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 010 5.656l-3 3a4 4 0 01-5.656-5.656l1.5-1.5M10.172 13.828a4 4 0 010-5.656l3-3a4 4 0 015.656 5.656l-1.5 1.5"/></svg>
+                </div>
+                <div class="flex-1 ml-4 border-b border-gray-100 pb-3 mt-3">
+                    <h3 class="font-bold text-gray-900 text-[15px]">${escapeHtml(title)}</h3>
+                    <p class="text-[13px] text-gray-500 mt-0.5">${escapeHtml(desc)}</p>
+                </div>
+                <div class="text-sm font-semibold text-gray-900 border-b border-gray-100 pb-3 mt-3">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </div>
+            `;
+            mobileList.appendChild(mobileItem);
+
+            // --- Append to desktop list ---
+            const desktopList = document.getElementById('desktopLinksList');
+            const index = desktopList.querySelectorAll('a').length + 1;
+            const desktopItem = document.createElement('a');
+            desktopItem.href = url;
+            desktopItem.target = '_blank';
+            desktopItem.rel = 'noopener noreferrer';
+            desktopItem.className = 'group flex items-center gap-6 py-7 border-b border-black/10 hover:pl-3 transition-[padding] duration-300';
+            desktopItem.innerHTML = `
+                <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0 link-index">${String(index).padStart(2, '0')}</span>
+                <div class="w-12 h-12 bg-gray-100 text-[#0B4F4A] rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 010 5.656l-3 3a4 4 0 01-5.656-5.656l1.5-1.5M10.172 13.828a4 4 0 010-5.656l3-3a4 4 0 015.656 5.656l-1.5 1.5"/></svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-display text-xl text-black group-hover:text-[#0B4F4A] transition-colors">${escapeHtml(title)}</h3>
+                    <p class="text-[13.5px] text-[#5B6472] mt-0.5">${escapeHtml(desc)}</p>
+                </div>
+                <svg class="w-4 h-4 text-[#0B4F4A] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            `;
+            desktopList.appendChild(desktopItem);
+
+            // Reset fields
+            titleInput.value = '';
+            descInput.value = '';
+            urlInput.value = '';
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+    </script>
 
 </body>
 </html>
