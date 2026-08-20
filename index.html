@@ -181,6 +181,86 @@
     background: #fff;
     cursor: pointer;
 }
+
+/* ===== Avatar clickable to change photo (added) ===== */
+.avatar-click-wrap {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.avatar-click-wrap .drawer-avatar-preview {
+    width: 100%;
+    height: 100%;
+    display: block;
+    transition: filter .2s ease;
+}
+.avatar-click-wrap:hover .drawer-avatar-preview {
+    filter: brightness(0.75);
+}
+.avatar-click-wrap .avatar-cam-badge {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: #0B4F4A;
+    border: 2px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+/* ===== Quick add popular socials (added) ===== */
+.quick-social-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+.quick-social-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 4px;
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,.08);
+    background: #fafafa;
+    cursor: pointer;
+    transition: transform .15s ease, background .15s ease;
+}
+.quick-social-btn:hover {
+    background: #f0f0f0;
+    transform: translateY(-1px);
+}
+.quick-social-btn:active {
+    transform: translateY(0);
+}
+.quick-social-btn .qs-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.quick-social-btn .qs-icon svg {
+    width: 18px;
+    height: 18px;
+}
+.quick-social-btn .qs-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #3a3f47;
+}
+.quick-social-btn.added {
+    opacity: .45;
+    pointer-events: none;
+}
     </style>
 </head>
 <body>
@@ -200,11 +280,15 @@
             <div class="drawer-section">
                 <label>Profile Photo</label>
                 <div class="flex items-center gap-4">
-                    <img id="drawerAvatarPreview" class="drawer-avatar-preview" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Avatar preview">
+                    <div class="avatar-click-wrap" onclick="document.getElementById('avatarInput').click()" title="Tap to change photo">
+                        <img id="drawerAvatarPreview" class="drawer-avatar-preview" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Avatar preview">
+                        <span class="avatar-cam-badge">
+                            <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 17a4 4 0 100-8 4 4 0 000 8z"/></svg>
+                        </span>
+                    </div>
                     <div class="flex-1">
                         <input type="file" id="avatarInput" accept="image/*" class="hidden" onchange="handleAvatarChange(event)">
-                        <button type="button" class="drawer-btn-ghost" onclick="document.getElementById('avatarInput').click()">Choose Image</button>
-                        <p class="drawer-hint">PNG or JPG, square photos look best.</p>
+                        <p class="drawer-hint">Tap the photo to change it. PNG or JPG, square photos look best.</p>
                     </div>
                 </div>
             </div>
@@ -229,6 +313,13 @@
                 <input type="url" id="newLinkUrl" placeholder="https://example.com" class="mb-3">
                 <button type="button" class="drawer-btn" onclick="addNewLink()">+ Add Link</button>
                 <p class="drawer-hint">The new link will be added to your links list below.</p>
+            </div>
+
+            <!-- Quick Add Popular Socials (added) -->
+            <div class="drawer-section">
+                <label>Quick Add — Popular Platforms</label>
+                <div class="quick-social-grid" id="quickSocialGrid"></div>
+                <p class="drawer-hint">Tap any icon to instantly add it to your links list below.</p>
             </div>
 
         </div>
@@ -671,6 +762,133 @@
             div.textContent = str;
             return div.innerHTML;
         }
+
+        // ===== Quick Add Popular Socials (added) =====
+        const POPULAR_SOCIALS = [
+            {
+                key: 'facebook', title: 'Facebook', desc: 'Friends & Community', url: 'https://facebook.com',
+                bg: '#E7EEFB', color: '#1877F2',
+                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.324v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>'
+            },
+            {
+                key: 'threads', title: 'Threads', desc: 'Conversations & Updates', url: 'https://threads.net',
+                bg: '#111111', color: '#ffffff',
+                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.5 2C6.7 2 3 6.1 3 12s3.7 10 9.5 10c3.3 0 5.9-1.2 7.6-3.4l-2.1-1.5c-1.2 1.5-2.9 2.3-5.2 2.3-3.4 0-5.7-1.9-6.1-5h13.9c.1-.5.1-1 .1-1.5C20.7 6.5 17.6 2 12.5 2zm-5.3 8.4c.4-2.5 2.3-4.1 5.1-4.1 2.9 0 4.7 1.5 5.1 4.1H7.2z"/></svg>'
+            },
+            {
+                key: 'tiktok', title: 'TikTok', desc: 'Short Videos', url: 'https://tiktok.com',
+                bg: '#111111', color: '#ffffff',
+                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>'
+            },
+            {
+                key: 'youtube', title: 'YouTube', desc: 'Videos & Tutorials', url: 'https://youtube.com',
+                bg: '#FDE9E9', color: '#FF0000',
+                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a2.994 2.994 0 0 0-2.107-2.117C19.59 3.5 12 3.5 12 3.5s-7.59 0-9.391.569A2.994 2.994 0 0 0 .502 6.186 31.36 31.36 0 0 0 0 12a31.36 31.36 0 0 0 .502 5.814 2.994 2.994 0 0 0 2.107 2.117C4.41 20.5 12 20.5 12 20.5s7.59 0 9.391-.569a2.994 2.994 0 0 0 2.107-2.117A31.36 31.36 0 0 0 24 12a31.36 31.36 0 0 0-.502-5.814zM9.75 15.568V8.432L15.818 12l-6.068 3.568z"/></svg>'
+            },
+            {
+                key: 'whatsapp', title: 'WhatsApp', desc: 'Message Me', url: 'https://wa.me/',
+                bg: '#E6F8EE', color: '#25D366',
+                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.437 0 .086 5.351.086 11.945c0 2.107.55 4.166 1.594 5.984L0 24l6.223-1.632a11.9 11.9 0 0 0 5.805 1.478h.005c6.594 0 11.945-5.351 11.945-11.945C24.978 5.35 19.629.002 12.031 0zm6.994 16.976c-.294.827-1.454 1.514-2.394 1.716-.636.135-1.466.243-4.264-.917-3.579-1.481-5.885-5.115-6.064-5.352-.174-.237-1.454-1.937-1.454-3.696s.913-2.622 1.239-2.981c.294-.324.639-.405.852-.405.213 0 .426.002.612.011.196.009.459-.074.718.548.294.706.998 2.436 1.086 2.614.087.174.145.377.029.611-.113.235-.174.377-.348.577-.174.201-.365.449-.522.605-.174.174-.353.362-.152.71.201.348.895 1.477 1.922 2.393 1.32 1.176 2.434 1.542 2.782 1.716.348.174.552.145.756-.087.201-.235.867-1.014 1.098-1.362.235-.348.469-.29.79-.174.32.116 2.032.958 2.379 1.132.348.174.582.261.669.406.087.145.087.833-.207 1.66z"/></svg>'
+            },
+            {
+                key: 'telegram', title: 'Telegram', desc: 'Chat & Channel', url: 'https://t.me/',
+                bg: '#E7F4FC', color: '#26A5E4',
+                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-1.98.94l-5.5-4.07-2.66 2.56c-.29.29-.54.54-1.1.54l.39-5.56 10.09-9.09c.44-.39-.1-.6-.68-.22L7.68 13.99l-5.29-1.65c-1.14-.36-1.15-1.14.24-1.68l20.6-7.94c.94-.34 1.77.22 1.68 1.07z"/></svg>'
+            },
+            {
+                key: 'snapchat', title: 'Snapchat', desc: 'Daily Moments', url: 'https://snapchat.com',
+                bg: '#FFF9DB', color: '#111111',
+                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.006 0C8.706 0 5.897 2.5 5.897 5.5c0 .3.03.6.06.9-.36-.1-.75-.15-1.14-.15-1.83 0-3.3 1.35-3.3 3 0 .9.45 1.65 1.14 2.1-.42.15-.75.45-.75.9 0 .75.9 1.35 2.1 1.5-.06.15-.09.3-.09.45 0 1.05 1.29 1.8 3 1.8.36 0 .69-.03 1.02-.09.51 1.5 2.19 2.55 4.08 2.55s3.57-1.05 4.08-2.55c.33.06.66.09 1.02.09 1.71 0 3-.75 3-1.8 0-.15-.03-.3-.09-.45 1.2-.15 2.1-.75 2.1-1.5 0-.45-.33-.75-.75-.9.69-.45 1.14-1.2 1.14-2.1 0-1.65-1.47-3-3.3-3-.39 0-.78.05-1.14.15.03-.3.06-.6.06-.9C18.115 2.5 15.306 0 12.006 0z"/></svg>'
+            },
+            {
+                key: 'pinterest', title: 'Pinterest', desc: 'Inspiration Boards', url: 'https://pinterest.com',
+                bg: '#FDEBEC', color: '#E60023',
+                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0a12 12 0 0 0-4.373 23.178c-.035-.947-.006-2.08.235-3.107.259-1.1 1.729-7.32 1.729-7.32s-.44-.879-.44-2.179c0-2.04 1.183-3.564 2.657-3.564 1.252 0 1.858.94 1.858 2.066 0 1.259-.802 3.14-1.216 4.884-.346 1.46.732 2.65 2.172 2.65 2.605 0 4.612-2.746 4.612-6.71 0-3.507-2.52-5.958-6.118-5.958-4.168 0-6.615 3.128-6.615 6.36 0 1.259.485 2.611 1.09 3.345.12.146.137.273.101.421-.11.458-.354 1.46-.402 1.66-.063.266-.209.322-.482.194-1.797-.837-2.921-3.465-2.921-5.576 0-4.541 3.299-8.716 9.51-8.716 4.994 0 8.876 3.556 8.876 8.312 0 4.958-3.126 8.947-7.463 8.947-1.457 0-2.828-.757-3.296-1.652l-.897 3.417c-.324 1.25-1.203 2.815-1.79 3.771A12 12 0 1 0 12 0z"/></svg>'
+            },
+            {
+                key: 'github', title: 'GitHub', desc: 'Code & Projects', url: 'https://github.com',
+                bg: '#F2F2F2', color: '#111111',
+                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>'
+            },
+            {
+                key: 'discord', title: 'Discord', desc: 'Community Server', url: 'https://discord.com',
+                bg: '#EEE9FB', color: '#5865F2',
+                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.099.246.198.373.291a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.076.076 0 0 0-.04.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.548-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.955 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>'
+            },
+            {
+                key: 'dribbble', title: 'Dribbble', desc: 'Design Shots', url: 'https://dribbble.com',
+                bg: '#FCE9F1', color: '#EA4C89',
+                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm9.885 11.169c-.14-.021-2.523-.514-4.943-.221-.096-.204-.191-.418-.297-.628-.298-.628-.626-1.264-.978-1.882 2.68-1.096 3.902-2.671 3.919-2.691a10.116 10.116 0 0 1 2.299 5.422zm-3.833-6.879c-.017.02-1.096 1.5-3.674 2.454A44.06 44.06 0 0 0 10.9 2.6a10.076 10.076 0 0 1 7.152 1.69zM8.665 2.996c.079.135 1.564 2.688 2.99 5.62-3.865 1.028-7.286 1.009-7.641 1.008a10.13 10.13 0 0 1 4.651-6.628zm-5.026 8.858c.081.001 4.184.01 8.596-1.24.239.489.464.988.671 1.487-.11.031-.222.061-.331.096-4.617 1.502-6.937 5.63-7.033 5.809a10.037 10.037 0 0 1-1.903-6.152zm2.905 7.703c.077-.147 1.906-3.86 6.101-5.35.02-.007.038-.011.058-.018a30.68 30.68 0 0 1 1.552 6.313 10.078 10.078 0 0 1-7.711-.945zm9.564.148a32.706 32.706 0 0 0-1.4-6.014c2.25-.36 4.208.229 4.442.303a10.09 10.09 0 0 1-3.042 5.711z"/></svg>'
+            }
+        ];
+
+        function renderQuickSocialGrid() {
+            const grid = document.getElementById('quickSocialGrid');
+            grid.innerHTML = POPULAR_SOCIALS.map(item => `
+                <button type="button" class="quick-social-btn" id="quickBtn-${item.key}" onclick="addPredefinedLink('${item.key}')">
+                    <span class="qs-icon" style="background:${item.bg};color:${item.color}">${item.svg}</span>
+                    <span class="qs-label">${item.title}</span>
+                </button>
+            `).join('');
+        }
+
+        function addPredefinedLink(key) {
+            const item = POPULAR_SOCIALS.find(s => s.key === key);
+            if (!item) return;
+
+            const btn = document.getElementById('quickBtn-' + key);
+            if (btn && btn.classList.contains('added')) return;
+
+            // --- Append to mobile list ---
+            const mobileList = document.getElementById('mobileLinksList');
+            const mobileItem = document.createElement('a');
+            mobileItem.href = item.url;
+            mobileItem.target = '_blank';
+            mobileItem.rel = 'noopener noreferrer';
+            mobileItem.className = 'flex items-center group';
+            mobileItem.innerHTML = `
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform" style="background:${item.bg};color:${item.color}">
+                    ${item.svg}
+                </div>
+                <div class="flex-1 ml-4 border-b border-gray-100 pb-3 mt-3">
+                    <h3 class="font-bold text-gray-900 text-[15px]">${escapeHtml(item.title)}</h3>
+                    <p class="text-[13px] text-gray-500 mt-0.5">${escapeHtml(item.desc)}</p>
+                </div>
+                <div class="text-sm font-semibold text-gray-900 border-b border-gray-100 pb-3 mt-3">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </div>
+            `;
+            mobileList.appendChild(mobileItem);
+
+            // --- Append to desktop list ---
+            const desktopList = document.getElementById('desktopLinksList');
+            const index = desktopList.querySelectorAll('a').length + 1;
+            const desktopItem = document.createElement('a');
+            desktopItem.href = item.url;
+            desktopItem.target = '_blank';
+            desktopItem.rel = 'noopener noreferrer';
+            desktopItem.className = 'group flex items-center gap-6 py-7 border-b border-black/10 hover:pl-3 transition-[padding] duration-300';
+            desktopItem.innerHTML = `
+                <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0 link-index">${String(index).padStart(2, '0')}</span>
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform" style="background:${item.bg};color:${item.color}">
+                    ${item.svg}
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-display text-xl text-black group-hover:text-[#0B4F4A] transition-colors">${escapeHtml(item.title)}</h3>
+                    <p class="text-[13.5px] text-[#5B6472] mt-0.5">${escapeHtml(item.desc)}</p>
+                </div>
+                <svg class="w-4 h-4 text-[#0B4F4A] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            `;
+            desktopList.appendChild(desktopItem);
+
+            // Mark this quick-add button as already added
+            if (btn) {
+                btn.classList.add('added');
+            }
+        }
+
+        // Build the quick-add grid on load
+        renderQuickSocialGrid();
     </script>
 
 </body>
