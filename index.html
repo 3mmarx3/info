@@ -1,895 +1,486 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ahmed - Personal Profile</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: black;
-            margin: 0;
-            padding: 0;
-        }
-        .font-display {
-            font-family: 'Fraunces', serif;
-            font-optical-sizing: auto;
-        }
-        .hide-scroll::-webkit-scrollbar {
-            display: none;
-        }
-        .hide-scroll {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .avatar-seal {
-            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-        }
-
-        button.px-5.flex.items-center.justify-center.bg-\[\#0B4F4A\].hover\:bg-\[\#0e615a\].transition.group {
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    background: black;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pilo - Autonomous Taxi App</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Fredoka', 'sans-serif'] },
+      colors: { neon: '#D8FF00', 'dark-bg': '#101011', 'app-bg': '#F6F6F8' }
+    }
+  }
 }
-
-.rounded-\[24px\].border.border-black\/10.bg-white.flex.items-stretch.overflow-hidden {
-    padding: 10px;
-    border-radius: 82px;
-}
-
-.w-px.bg-black\/10.my-3 {
-    padding: m;
-    margin: 0 10px;
-}
-
-
-.rounded-\[24px\].border.border-black\/10.bg-white.flex.items-stretch.overflow-hidden {}
-
-.rounded-\[24px\].border.border-black\/10.bg-white.flex.items-stretch.overflow-hidden .flex-1 {
-    margin: pa;
-    /* padding: 0 10px; */
-    margin:  5px;
-    text-align: center;
-}
-
-/* ===== Menu drawer (added) ===== */
-#menuOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.55);
-    z-index: 90;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .25s ease;
-}
-#menuOverlay.open {
-    opacity: 1;
-    pointer-events: auto;
-}
-#menuDrawer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: min(340px, 88vw);
-    background: #ffffff;
-    z-index: 91;
-    transform: translateX(-100%);
-    transition: transform .3s ease;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 8px 0 30px rgba(0,0,0,.25);
-}
-#menuDrawer.open {
-    transform: translateX(0);
-}
-#menuDrawer .drawer-head {
-    padding: 22px 20px 16px 20px;
-    border-bottom: 1px solid rgba(0,0,0,.08);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-#menuDrawer .drawer-body {
-    padding: 18px 20px 30px 20px;
-    overflow-y: auto;
-    flex: 1;
-}
-#menuDrawer .drawer-section {
-    margin-bottom: 26px;
-}
-#menuDrawer label {
-    display: block;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: #5B6472;
-    margin-bottom: 8px;
-}
-#menuDrawer input[type="text"],
-#menuDrawer textarea,
-#menuDrawer input[type="url"] {
-    width: 100%;
-    border: 1px solid rgba(0,0,0,.12);
-    border-radius: 12px;
-    padding: 10px 12px;
-    font-size: 13.5px;
-    font-family: 'Inter', sans-serif;
-    color: #111;
-    outline: none;
-    box-sizing: border-box;
-}
-#menuDrawer input[type="text"]:focus,
-#menuDrawer textarea:focus,
-#menuDrawer input[type="url"]:focus {
-    border-color: #0B4F4A;
-}
-#menuDrawer textarea {
-    resize: vertical;
-    min-height: 70px;
-}
-.drawer-avatar-preview {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
-    object-fit: cover;
-    border: 1px solid rgba(0,0,0,.1);
-}
-.drawer-btn {
-    width: 100%;
-    background: #0B4F4A;
-    color: #fff;
-    border: none;
-    border-radius: 999px;
-    padding: 10px 14px;
-    font-size: 13.5px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background .2s ease;
-}
-.drawer-btn:hover {
-    background: #0e615a;
-}
-.drawer-btn-ghost {
-    width: 100%;
-    background: #f4f4f4;
-    color: #111;
-    border: 1px solid rgba(0,0,0,.1);
-    border-radius: 999px;
-    padding: 9px 14px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-}
-.drawer-hint {
-    font-size: 11.5px;
-    color: #9aa1ab;
-    margin-top: 6px;
-}
-.drawer-close-btn {
-    width: 34px;
-    height: 34px;
-    border-radius: 999px;
-    border: 1px solid rgba(0,0,0,.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    cursor: pointer;
-}
-
-/* ===== Avatar clickable to change photo (added) ===== */
-.avatar-click-wrap {
-    position: relative;
-    width: 64px;
-    height: 64px;
-    cursor: pointer;
-    flex-shrink: 0;
-}
-.avatar-click-wrap .drawer-avatar-preview {
-    width: 100%;
-    height: 100%;
-    display: block;
-    transition: filter .2s ease;
-}
-.avatar-click-wrap:hover .drawer-avatar-preview {
-    filter: brightness(0.75);
-}
-.avatar-click-wrap .avatar-cam-badge {
-    position: absolute;
-    bottom: -4px;
-    right: -4px;
-    width: 22px;
-    height: 22px;
-    border-radius: 999px;
-    background: #0B4F4A;
-    border: 2px solid #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-}
-
-/* ===== Quick add popular socials (added) ===== */
-.quick-social-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-}
-.quick-social-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 10px 4px;
-    border-radius: 14px;
-    border: 1px solid rgba(0,0,0,.08);
-    background: #fafafa;
-    cursor: pointer;
-    transition: transform .15s ease, background .15s ease;
-}
-.quick-social-btn:hover {
-    background: #f0f0f0;
-    transform: translateY(-1px);
-}
-.quick-social-btn:active {
-    transform: translateY(0);
-}
-.quick-social-btn .qs-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.quick-social-btn .qs-icon svg {
-    width: 18px;
-    height: 18px;
-}
-.quick-social-btn .qs-label {
-    font-size: 10.5px;
-    font-weight: 600;
-    color: #3a3f47;
-}
-.quick-social-btn.added {
-    opacity: .45;
-    pointer-events: none;
-}
-    </style>
+</script>
+<style>
+.map-bg { background-color: #131315; }
+::-webkit-scrollbar { display: none; }
+body { -webkit-tap-highlight-color: transparent; }
+</style>
 </head>
-<body>
+<body class="bg-app-bg text-gray-900 m-0 p-0 min-h-[100dvh] font-sans antialiased">
+  <main class="max-w-md mx-auto h-full flex flex-col px-6 pt-8 pb-8 relative">
 
-    <!-- ======================= MENU DRAWER (added) ======================= -->
-    <div id="menuOverlay" onclick="closeMenu()"></div>
-    <div id="menuDrawer">
-        <div class="drawer-head">
-            <span class="font-semibold text-[13px] tracking-[0.2em] text-black">EDIT PROFILE</span>
-            <button class="drawer-close-btn" onclick="closeMenu()" aria-label="Close menu">
-                <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-        </div>
-        <div class="drawer-body">
-
-            <!-- Change Photo -->
-            <div class="drawer-section">
-                <label>Profile Photo</label>
-                <div class="flex items-center gap-4">
-                    <div class="avatar-click-wrap" onclick="document.getElementById('avatarInput').click()" title="Tap to change photo">
-                        <img id="drawerAvatarPreview" class="drawer-avatar-preview" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Avatar preview">
-                        <span class="avatar-cam-badge">
-                            <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 17a4 4 0 100-8 4 4 0 000 8z"/></svg>
-                        </span>
-                    </div>
-                    <div class="flex-1">
-                        <input type="file" id="avatarInput" accept="image/*" class="hidden" onchange="handleAvatarChange(event)">
-                        <p class="drawer-hint">Tap the photo to change it. PNG or JPG, square photos look best.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Edit Name -->
-            <div class="drawer-section">
-                <label for="nameInput">Full Name</label>
-                <input type="text" id="nameInput" value="Ahmed Mohammed" oninput="handleNameChange(event)">
-            </div>
-
-            <!-- Edit Bio -->
-            <div class="drawer-section">
-                <label for="bioInput">Bio</label>
-                <textarea id="bioInput" oninput="handleBioChange(event)">I design clear, considered product interfaces — from early concepts to polished, shippable screens for startups and enterprise teams alike.</textarea>
-            </div>
-
-            <!-- Add New Link -->
-            <div class="drawer-section">
-                <label>Add New Link</label>
-                <input type="text" id="newLinkTitle" placeholder="Title (e.g. Dribbble)" class="mb-2">
-                <input type="text" id="newLinkDesc" placeholder="Short description" class="mb-2">
-                <input type="url" id="newLinkUrl" placeholder="https://example.com" class="mb-3">
-                <button type="button" class="drawer-btn" onclick="addNewLink()">+ Add Link</button>
-                <p class="drawer-hint">The new link will be added to your links list below.</p>
-            </div>
-
-            <!-- Quick Add Popular Socials (added) -->
-            <div class="drawer-section">
-                <label>Quick Add — Popular Platforms</label>
-                <div class="quick-social-grid" id="quickSocialGrid"></div>
-                <p class="drawer-hint">Tap any icon to instantly add it to your links list below.</p>
-            </div>
-
-        </div>
+    <div class="flex justify-between items-start mt-2">
+      <div>
+        <h1 class="text-[3.2rem] leading-[1.02] font-semibold tracking-tight text-gray-900">Good<br>morning,<br>Alex</h1>
+        <p class="text-[13px] text-gray-700 font-medium mt-3">Today's suggestion</p>
+      </div>
+      <div class="w-[60px] h-[60px] rounded-full bg-gray-300 border-[2.5px] border-white shadow-sm overflow-hidden flex items-center justify-center mt-2 shrink-0">
+        <img src="https://i.pravatar.cc/150?img=13" alt="Profile" class="w-full h-full object-cover">
+      </div>
     </div>
 
-    <!-- ======================= MOBILE (phone card) ======================= -->
-    <div class="lg:hidden flex items-center justify-center min-h-screen">
-        <div class="w-full  h-[100dvh] sm:h-[900px] bg-[#000000] sm:rounded-[50px] overflow-hidden flex flex-col relative   sm:border-4 sm:border-black">
+    <div class="map-bg rounded-[2.5rem] w-full h-[250px] mt-5 relative overflow-hidden shadow-xl border border-gray-800">
 
-            <!-- Top Section -->
-            <div class="bg-white rounded-b-[40px] flex flex-col relative z-10 pb-7 border-b border-black/5">
+      <svg class="absolute top-0 left-0 w-full h-full z-0" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
+        <rect width="600" height="400" fill="#131315" />
+        <g stroke="#242427" stroke-width="1.1" stroke-linecap="round">
+<line x1="118.1" y1="72.1" x2="162.6" y2="52.1" />
+<line x1="476.2" y1="255.9" x2="427.6" y2="251.5" />
+<line x1="387.0" y1="197.2" x2="401.9" y2="243.6" />
+<line x1="170.2" y1="239.0" x2="152.0" y2="283.7" />
+<line x1="202.4" y1="246.1" x2="225.9" y2="204.0" />
+<line x1="198.1" y1="8.9" x2="161.0" y2="39.3" />
+<line x1="396.9" y1="157.9" x2="351.9" y2="141.4" />
+<line x1="498.3" y1="59.8" x2="470.4" y2="21.8" />
+<line x1="306.7" y1="155.6" x2="298.6" y2="109.2" />
+<line x1="299.8" y1="323.5" x2="253.2" y2="329.5" />
+<line x1="54.4" y1="109.2" x2="62.3" y2="155.3" />
+<line x1="208.9" y1="15.7" x2="202.7" y2="61.8" />
+<line x1="539.5" y1="376.1" x2="531.1" y2="330.4" />
+<line x1="119.2" y1="191.5" x2="157.9" y2="216.8" />
+<line x1="488.4" y1="150.8" x2="443.3" y2="160.1" />
+<line x1="311.2" y1="63.4" x2="297.1" y2="107.1" />
+<line x1="119.0" y1="165.9" x2="164.6" y2="159.6" />
+<line x1="341.6" y1="391.3" x2="300.0" y2="372.6" />
+<line x1="580.1" y1="113.8" x2="577.7" y2="68.3" />
+<line x1="115.9" y1="110.1" x2="109.1" y2="155.0" />
+<line x1="442.8" y1="108.8" x2="398.4" y2="116.8" />
+<line x1="524.9" y1="194.8" x2="485.9" y2="216.6" />
+<line x1="575.9" y1="331.3" x2="531.2" y2="330.3" />
+<line x1="160.2" y1="115.1" x2="115.9" y2="110.1" />
+<line x1="69.3" y1="63.6" x2="62.4" y2="19.6" />
+<line x1="17.1" y1="284.9" x2="18.4" y2="240.4" />
+<line x1="349.7" y1="332.4" x2="360.4" y2="375.4" />
+<line x1="510.7" y1="252.7" x2="528.8" y2="292.9" />
+<line x1="298.2" y1="286.5" x2="312.7" y2="244.9" />
+<line x1="533.3" y1="114.9" x2="517.2" y2="155.7" />
+<line x1="62.3" y1="155.3" x2="20.1" y2="166.9" />
+<line x1="78.0" y1="300.7" x2="120.0" y2="288.7" />
+<line x1="38.1" y1="338.4" x2="25.8" y2="380.3" />
+<line x1="390.4" y1="19.9" x2="348.5" y2="8.3" />
+<line x1="397.5" y1="187.0" x2="440.2" y2="194.8" />
+<line x1="79.8" y1="340.9" x2="80.0" y2="384.2" />
+<line x1="254.4" y1="100.3" x2="297.1" y2="107.1" />
+<line x1="219.9" y1="380.7" x2="263.0" y2="384.1" />
+<line x1="402.0" y1="376.2" x2="443.5" y2="364.5" />
+<line x1="79.8" y1="340.9" x2="122.8" y2="342.9" />
+<line x1="204.7" y1="106.7" x2="194.7" y2="64.9" />
+<line x1="110.1" y1="200.4" x2="115.2" y2="243.0" />
+<line x1="245.5" y1="62.7" x2="202.7" y2="61.8" />
+<line x1="352.4" y1="330.0" x2="352.3" y2="287.3" />
+<line x1="471.2" y1="112.0" x2="488.4" y2="150.8" />
+<line x1="26.9" y1="55.9" x2="68.4" y2="64.4" />
+<line x1="124.2" y1="369.3" x2="157.2" y2="395.6" />
+<line x1="246.2" y1="158.9" x2="241.5" y2="200.8" />
+<line x1="442.8" y1="108.8" x2="426.6" y2="69.8" />
+<line x1="124.2" y1="343.9" x2="165.9" y2="337.7" />
+<line x1="64.7" y1="258.0" x2="31.0" y2="233.0" />
+<line x1="439.6" y1="343.6" x2="475.5" y2="322.4" />
+<line x1="291.3" y1="5.4" x2="252.9" y2="21.6" />
+<line x1="573.6" y1="242.1" x2="532.5" y2="239.3" />
+<line x1="427.0" y1="292.7" x2="427.6" y2="251.5" />
+<line x1="60.6" y1="104.8" x2="68.4" y2="64.4" />
+<line x1="167.1" y1="122.3" x2="204.7" y2="106.7" />
+<line x1="70.0" y1="160.7" x2="68.0" y2="201.2" />
+<line x1="569.2" y1="19.6" x2="529.5" y2="11.2" />
+<line x1="488.3" y1="93.0" x2="527.4" y2="103.7" />
+<line x1="565.5" y1="160.3" x2="525.2" y2="163.6" />
+<line x1="60.7" y1="275.6" x2="22.6" y2="289.1" />
+<line x1="343.9" y1="243.9" x2="355.2" y2="282.4" />
+<line x1="110.6" y1="21.4" x2="150.7" y2="23.8" />
+<line x1="470.4" y1="295.4" x2="476.2" y2="255.9" />
+<line x1="532.8" y1="201.4" x2="572.2" y2="206.9" />
+<line x1="263.0" y1="239.6" x2="302.2" y2="234.1" />
+<line x1="214.1" y1="349.3" x2="245.7" y2="325.4" />
+<line x1="109.1" y1="155.0" x2="70.0" y2="160.7" />
+<line x1="402.0" y1="376.2" x2="395.3" y2="337.4" />
+<line x1="488.2" y1="10.6" x2="527.4" y2="13.2" />
+<line x1="263.0" y1="239.6" x2="265.3" y2="278.8" />
+<line x1="398.5" y1="155.6" x2="398.4" y2="116.8" />
+<line x1="569.9" y1="121.8" x2="565.5" y2="160.3" />
+<line x1="493.5" y1="339.3" x2="531.1" y2="330.4" />
+<line x1="349.7" y1="332.4" x2="311.7" y2="337.4" />
+<line x1="395.3" y1="337.4" x2="433.5" y2="336.0" />
+<line x1="497.0" y1="388.2" x2="534.3" y2="380.1" />
+<line x1="115.8" y1="110.0" x2="118.1" y2="72.1" />
+<line x1="355.2" y1="207.4" x2="344.1" y2="243.7" />
+<line x1="532.8" y1="201.4" x2="532.5" y2="239.3" />
+<line x1="527.4" y1="103.7" x2="547.1" y2="71.6" />
+<line x1="246.5" y1="14.2" x2="208.9" y2="15.7" />
+<line x1="165.9" y1="337.7" x2="169.3" y2="375.2" />
+<line x1="78.0" y1="208.8" x2="82.0" y2="246.1" />
+<line x1="25.1" y1="326.5" x2="22.6" y2="289.1" />
+<line x1="533.3" y1="114.9" x2="569.9" y2="121.8" />
+<line x1="218.8" y1="114.1" x2="252.7" y2="98.8" />
+<line x1="311.7" y1="337.4" x2="300.0" y2="372.6" />
+<line x1="435.5" y1="299.0" x2="433.5" y2="336.0" />
+<line x1="344.5" y1="68.4" x2="355.7" y2="103.7" />
+<line x1="539.5" y1="376.1" x2="573.1" y2="391.5" />
+<line x1="123.2" y1="284.7" x2="108.5" y2="250.9" />
+<line x1="245.5" y1="62.7" x2="252.7" y2="98.8" />
+<line x1="381.3" y1="279.7" x2="397.3" y2="246.6" />
+<line x1="394.9" y1="387.6" x2="360.4" y2="375.4" />
+<line x1="446.1" y1="111.2" x2="433.2" y2="145.3" />
+<line x1="519.3" y1="48.2" x2="547.1" y2="71.6" />
+<line x1="380.7" y1="54.8" x2="390.4" y2="19.9" />
+<line x1="433.2" y1="145.3" x2="398.5" y2="155.6" />
+<line x1="531.2" y1="330.3" x2="530.2" y2="294.2" />
+<line x1="104.4" y1="25.6" x2="71.1" y2="11.7" />
+<line x1="519.3" y1="48.2" x2="527.4" y2="13.2" />
+<line x1="580.4" y1="65.3" x2="580.4" y2="29.5" />
+<line x1="352.4" y1="330.0" x2="387.9" y2="329.3" />
+<line x1="164.4" y1="296.7" x2="172.2" y2="331.4" />
+<line x1="260.1" y1="237.4" x2="247.2" y2="204.3" />
+<line x1="299.8" y1="323.5" x2="296.3" y2="288.3" />
+<line x1="14.9" y1="70.9" x2="23.8" y2="104.9" />
+<line x1="69.3" y1="63.6" x2="104.1" y2="59.3" />
+<line x1="313.9" y1="25.9" x2="345.8" y2="11.8" />
+<line x1="359.5" y1="107.4" x2="351.9" y2="141.4" />
+<line x1="301.6" y1="199.3" x2="302.2" y2="234.1" />
+<line x1="440.2" y1="194.8" x2="443.3" y2="160.1" />
+<line x1="28.0" y1="23.9" x2="62.4" y2="19.6" />
+<line x1="124.2" y1="369.3" x2="101.2" y2="394.7" />
+<line x1="298.3" y1="374.0" x2="265.3" y2="382.1" />
+<line x1="304.0" y1="158.3" x2="297.6" y2="191.4" />
+<line x1="397.4" y1="73.5" x2="382.7" y2="103.9" />
+<line x1="104.4" y1="25.6" x2="104.1" y2="59.3" />
+<line x1="237.3" y1="292.8" x2="245.7" y2="325.4" />
+<line x1="344.5" y1="68.4" x2="311.2" y2="63.4" />
+<line x1="582.0" y1="337.2" x2="591.1" y2="369.6" />
+<line x1="68.0" y1="201.2" x2="35.7" y2="210.0" />
+<line x1="215.1" y1="147.2" x2="218.8" y2="114.1" />
+<line x1="78.0" y1="300.7" x2="70.7" y2="333.1" />
+<line x1="110.1" y1="200.4" x2="78.0" y2="208.8" />
+<line x1="387.9" y1="329.3" x2="403.3" y2="299.9" />
+<line x1="246.2" y1="158.9" x2="215.1" y2="147.2" />
+<line x1="38.1" y1="338.4" x2="70.7" y2="333.1" />
+<line x1="202.4" y1="246.1" x2="170.2" y2="239.0" />
+<line x1="265.3" y1="278.8" x2="296.3" y2="288.3" />
+<line x1="575.3" y1="239.0" x2="572.2" y2="206.9" />
+<line x1="307.2" y1="57.3" x2="313.9" y2="25.9" />
+<line x1="26.9" y1="55.9" x2="28.0" y2="23.9" />
+<line x1="219.9" y1="380.7" x2="214.1" y2="349.3" />
+<line x1="435.5" y1="299.0" x2="467.1" y2="299.5" />
+<line x1="167.1" y1="122.3" x2="174.0" y2="153.0" />
+<line x1="200.7" y1="188.8" x2="190.7" y2="159.2" />
+<line x1="265.3" y1="278.8" x2="237.3" y2="292.8" />
+<line x1="524.9" y1="194.8" x2="525.2" y2="163.6" />
+<line x1="312.7" y1="244.9" x2="343.9" y2="243.9" />
+<line x1="479.2" y1="367.0" x2="493.5" y2="339.3" />
+<line x1="54.4" y1="109.2" x2="23.8" y2="104.9" />
+<line x1="188.1" y1="332.7" x2="214.1" y2="349.3" />
+<line x1="547.1" y1="71.6" x2="577.7" y2="68.3" />
+<line x1="78.0" y1="300.7" x2="60.7" y2="275.6" />
+<line x1="291.3" y1="5.4" x2="313.9" y2="25.9" />
+<line x1="403.3" y1="299.9" x2="381.3" y2="279.7" />
+<line x1="576.0" y1="271.7" x2="573.6" y2="242.1" />
+<line x1="225.9" y1="204.0" x2="200.7" y2="188.8" />
+<line x1="426.6" y1="69.8" x2="397.4" y2="73.5" />
+<line x1="397.5" y1="187.0" x2="396.9" y2="157.9" />
+<line x1="352.2" y1="60.6" x2="380.7" y2="54.8" />
+<line x1="152.0" y1="283.7" x2="123.2" y2="284.7" />
+<line x1="573.1" y1="391.5" x2="591.1" y2="369.6" />
+<line x1="450.2" y1="400.0" x2="454.4" y2="372.3" />
+<line x1="254.3" y1="49.6" x2="252.9" y2="21.6" />
+<line x1="489.5" y1="152.0" x2="517.2" y2="155.7" />
+<line x1="491.0" y1="244.0" x2="485.9" y2="216.6" />
+<line x1="306.7" y1="155.6" x2="334.6" y2="155.7" />
+<line x1="497.0" y1="388.2" x2="479.2" y2="367.0" />
+<line x1="20.1" y1="166.9" x2="22.3" y2="194.4" />
+<line x1="215.1" y1="147.2" x2="190.7" y2="159.2" />
+<line x1="82.0" y1="246.1" x2="108.5" y2="250.9" />
+<line x1="580.0" y1="173.5" x2="600.0" y2="155.8" />
+<line x1="0.0" y1="25.6" x2="26.5" y2="22.6" />
+<line x1="298.3" y1="374.0" x2="303.6" y2="400.0" />
+<line x1="438.3" y1="42.0" x2="455.3" y2="21.9" />
+<line x1="381.3" y1="279.7" x2="355.2" y2="282.4" />
+<line x1="119.0" y1="165.9" x2="119.2" y2="191.5" />
+<line x1="510.7" y1="252.7" x2="532.5" y2="239.3" />
+<line x1="488.3" y1="93.0" x2="471.2" y2="112.0" />
+<line x1="479.2" y1="367.0" x2="454.4" y2="372.3" />
+<line x1="124.2" y1="369.3" x2="124.2" y2="343.9" />
+<line x1="0.0" y1="329.7" x2="25.1" y2="326.5" />
+<line x1="401.9" y1="243.6" x2="426.4" y2="249.9" />
+<line x1="380.7" y1="54.8" x2="397.4" y2="73.5" />
+<line x1="471.2" y1="112.0" x2="446.1" y2="111.2" />
+<line x1="387.0" y1="197.2" x2="362.1" y2="199.8" />
+<line x1="575.3" y1="239.0" x2="600.0" y2="235.4" />
+<line x1="438.3" y1="47.8" x2="426.6" y2="69.8" />
+<line x1="0.0" y1="378.9" x2="24.8" y2="381.4" />
+<line x1="403.3" y1="299.9" x2="427.0" y2="292.7" />
+<line x1="493.5" y1="339.3" x2="475.5" y2="322.4" />
+<line x1="360.4" y1="375.4" x2="341.6" y2="391.3" />
+<line x1="467.1" y1="299.5" x2="475.5" y2="322.4" />
+<line x1="498.3" y1="59.8" x2="519.3" y2="48.2" />
+<line x1="152.4" y1="0.0" x2="150.7" y2="23.8" />
+<line x1="22.3" y1="194.4" x2="0.0" y2="202.8" />
+<line x1="157.2" y1="395.6" x2="169.3" y2="375.2" />
+<line x1="101.2" y1="394.7" x2="80.0" y2="384.2" />
+<line x1="35.7" y1="210.0" x2="31.0" y2="233.0" />
+<line x1="382.7" y1="103.9" x2="359.5" y2="107.4" />
+<line x1="26.5" y1="22.6" x2="21.8" y2="0.0" />
+<line x1="455.3" y1="21.9" x2="448.5" y2="-0.0" />
+<line x1="583.9" y1="187.3" x2="572.2" y2="206.9" />
+<line x1="485.9" y1="216.6" x2="469.1" y2="201.4" />
+<line x1="593.8" y1="285.4" x2="576.0" y2="271.7" />
+<line x1="351.9" y1="141.4" x2="334.6" y2="155.7" />
+<line x1="469.1" y1="201.4" x2="446.8" y2="200.3" />
+<line x1="114.2" y1="-0.0" x2="110.6" y2="21.4" />
+<line x1="600.0" y1="20.6" x2="580.4" y2="29.5" />
+<line x1="491.0" y1="244.0" x2="510.7" y2="252.7" />
+<line x1="443.5" y1="364.5" x2="439.6" y2="343.6" />
+<line x1="470.4" y1="21.8" x2="488.2" y2="10.6" />
+<line x1="82.0" y1="246.1" x2="64.7" y2="258.0" />
+<line x1="580.1" y1="113.8" x2="600.0" y2="120.3" />
+<line x1="35.7" y1="210.0" x2="22.3" y2="194.4" />
+<line x1="20.3" y1="107.9" x2="0.0" y2="110.0" />
+<line x1="194.7" y1="64.9" x2="174.4" y2="62.1" />
+<line x1="534.3" y1="380.1" x2="530.0" y2="400.0" />
+<line x1="398.4" y1="116.8" x2="382.7" y2="103.9" />
+<line x1="569.2" y1="19.6" x2="573.5" y2="0.0" />
+<line x1="219.4" y1="381.3" x2="212.4" y2="400.0" />
+<line x1="600.0" y1="68.5" x2="580.4" y2="65.3" />
+<line x1="565.5" y1="160.3" x2="580.0" y2="173.5" />
+<line x1="26.9" y1="55.9" x2="14.9" y2="70.9" />
+<line x1="491.0" y1="244.0" x2="476.2" y2="255.9" />
+<line x1="104.1" y1="59.3" x2="118.1" y2="72.1" />
+<line x1="488.5" y1="75.9" x2="498.3" y2="59.8" />
+<line x1="24.8" y1="381.4" x2="27.1" y2="400.0" />
+<line x1="395.2" y1="17.6" x2="401.6" y2="0.0" />
+<line x1="150.7" y1="23.8" x2="161.0" y2="39.3" />
+<line x1="18.4" y1="240.4" x2="0.0" y2="238.1" />
+<line x1="582.0" y1="337.2" x2="600.0" y2="332.8" />
+<line x1="311.7" y1="337.4" x2="299.8" y2="323.5" />
+<line x1="164.4" y1="296.7" x2="152.0" y2="283.7" />
+<line x1="60.7" y1="275.6" x2="64.7" y2="258.0" />
+<line x1="216.1" y1="276.6" x2="212.2" y2="259.1" />
+<line x1="433.2" y1="145.3" x2="443.3" y2="160.1" />
+<line x1="190.7" y1="159.2" x2="174.0" y2="153.0" />
+<line x1="25.1" y1="326.5" x2="38.1" y2="338.4" />
+<line x1="0.0" y1="283.7" x2="17.1" y2="284.9" />
+<line x1="488.3" y1="93.0" x2="488.5" y2="75.9" />
+<line x1="600.0" y1="190.8" x2="583.9" y2="187.3" />
+<line x1="212.2" y1="259.1" x2="202.4" y2="246.1" />
+<line x1="170.2" y1="239.0" x2="161.2" y2="225.9" />
+<line x1="263.3" y1="400.0" x2="263.0" y2="384.1" />
+<line x1="70.0" y1="400.0" x2="76.9" y2="385.6" />
+<line x1="204.7" y1="106.7" x2="218.8" y2="114.1" />
+<line x1="188.1" y1="332.7" x2="172.2" y2="331.4" />
+<line x1="241.5" y1="200.8" x2="225.9" y2="204.0" />
+<line x1="254.3" y1="49.6" x2="245.5" y2="62.7" />
+<line x1="174.4" y1="62.1" x2="162.6" y2="52.1" />
+<line x1="14.9" y1="70.9" x2="0.0" y2="66.6" />
+<line x1="302.2" y1="234.1" x2="312.7" y2="244.9" />
+<line x1="455.3" y1="21.9" x2="470.4" y2="21.8" />
+<line x1="580.4" y1="29.5" x2="569.2" y2="19.6" />
+<line x1="387.0" y1="197.2" x2="397.5" y2="187.0" />
+<line x1="119.0" y1="165.9" x2="109.1" y2="155.0" />
+<line x1="18.4" y1="240.4" x2="31.0" y2="233.0" />
+<line x1="244.8" y1="0.0" x2="246.5" y2="14.2" />
+<line x1="580.0" y1="173.5" x2="583.9" y2="187.3" />
+<line x1="216.1" y1="276.6" x2="225.0" y2="287.3" />
+<line x1="402.0" y1="376.2" x2="394.9" y2="387.6" />
+<line x1="225.0" y1="287.3" x2="237.3" y2="292.8" />
+<line x1="454.4" y1="372.3" x2="443.5" y2="364.5" />
+<line x1="580.1" y1="113.8" x2="569.9" y2="121.8" />
+<line x1="161.0" y1="39.3" x2="162.6" y2="52.1" />
+<line x1="208.9" y1="15.7" x2="198.1" y2="8.9" />
+<line x1="527.4" y1="103.7" x2="533.3" y2="114.9" />
+<line x1="119.2" y1="191.5" x2="110.1" y2="200.4" />
+<line x1="68.0" y1="201.2" x2="78.0" y2="208.8" />
+<line x1="394.9" y1="387.6" x2="397.0" y2="400.0" />
+<line x1="70.7" y1="333.1" x2="79.8" y2="340.9" />
+<line x1="497.0" y1="388.2" x2="495.1" y2="400.0" />
+<line x1="71.1" y1="11.7" x2="62.4" y2="19.6" />
+<line x1="71.5" y1="0.0" x2="71.1" y2="11.7" />
+<line x1="164.6" y1="159.6" x2="174.0" y2="153.0" />
+<line x1="11.5" y1="160.0" x2="0.0" y2="160.0" />
+<line x1="517.2" y1="155.7" x2="525.2" y2="163.6" />
+<line x1="529.2" y1="0.0" x2="529.5" y2="11.2" />
+<line x1="11.5" y1="160.0" x2="20.1" y2="166.9" />
+<line x1="387.9" y1="329.3" x2="395.3" y2="337.4" />
+<line x1="352.2" y1="60.6" x2="344.5" y2="68.4" />
+<line x1="486.3" y1="0.0" x2="488.2" y2="10.6" />
+<line x1="427.0" y1="292.7" x2="435.5" y2="299.0" />
+<line x1="246.2" y1="158.9" x2="254.8" y2="153.0" />
+<line x1="108.5" y1="250.9" x2="115.2" y2="243.0" />
+<line x1="362.1" y1="199.8" x2="355.2" y2="207.4" />
+<line x1="524.9" y1="194.8" x2="532.8" y2="201.4" />
+<line x1="167.1" y1="122.3" x2="160.2" y2="115.1" />
+<line x1="246.5" y1="14.2" x2="252.9" y2="21.6" />
+<line x1="433.5" y1="336.0" x2="439.6" y2="343.6" />
+<line x1="62.3" y1="155.3" x2="70.0" y2="160.7" />
+<line x1="195.6" y1="0.0" x2="198.1" y2="8.9" />
+<line x1="591.1" y1="369.6" x2="600.0" y2="369.1" />
+<line x1="172.2" y1="331.4" x2="165.9" y2="337.7" />
+<line x1="297.6" y1="191.4" x2="301.6" y2="199.3" />
+<line x1="341.6" y1="391.3" x2="342.1" y2="400.0" />
+<line x1="573.1" y1="391.5" x2="575.0" y2="400.0" />
+<line x1="440.2" y1="194.8" x2="446.8" y2="200.3" />
+<line x1="194.7" y1="64.9" x2="202.7" y2="61.8" />
+<line x1="253.2" y1="329.5" x2="245.7" y2="325.4" />
+<line x1="575.9" y1="331.3" x2="582.0" y2="337.2" />
+<line x1="348.5" y1="8.3" x2="347.3" y2="0.0" />
+<line x1="60.6" y1="104.8" x2="54.4" y2="109.2" />
+<line x1="110.6" y1="21.4" x2="104.4" y2="25.6" />
+<line x1="307.2" y1="57.3" x2="311.2" y2="63.4" />
+<line x1="22.6" y1="289.1" x2="17.1" y2="284.9" />
+<line x1="241.5" y1="200.8" x2="247.2" y2="204.3" />
+<line x1="539.5" y1="376.1" x2="534.3" y2="380.1" />
+<line x1="600.0" y1="286.0" x2="593.8" y2="285.4" />
+<line x1="438.3" y1="42.0" x2="438.3" y2="47.8" />
+<line x1="355.2" y1="282.4" x2="352.3" y2="287.3" />
+<line x1="103.2" y1="400.0" x2="101.2" y2="394.7" />
+<line x1="292.5" y1="0.0" x2="291.3" y2="5.4" />
+<line x1="397.3" y1="246.6" x2="401.9" y2="243.6" />
+<line x1="157.9" y1="216.8" x2="160.8" y2="221.4" />
+<line x1="359.5" y1="107.4" x2="355.7" y2="103.7" />
+<line x1="395.2" y1="17.6" x2="390.4" y2="19.9" />
+<line x1="470.4" y1="295.4" x2="467.1" y2="299.5" />
+<line x1="120.0" y1="288.7" x2="123.2" y2="284.7" />
+<line x1="20.3" y1="107.9" x2="23.8" y2="104.9" />
+<line x1="161.2" y1="225.9" x2="160.8" y2="221.4" />
+<line x1="345.8" y1="11.8" x2="348.5" y2="8.3" />
+<line x1="157.2" y1="395.6" x2="157.3" y2="400.0" />
+<line x1="446.1" y1="111.2" x2="442.8" y2="108.8" />
+<line x1="580.4" y1="65.3" x2="577.7" y2="68.3" />
+<line x1="304.0" y1="158.3" x2="306.7" y2="155.6" />
+<line x1="263.0" y1="239.6" x2="260.1" y2="237.4" />
+<line x1="349.7" y1="332.4" x2="352.4" y2="330.0" />
+<line x1="573.6" y1="242.1" x2="575.3" y2="239.0" />
+<line x1="80.0" y1="384.2" x2="76.9" y2="385.6" />
+<line x1="263.0" y1="384.1" x2="265.3" y2="382.1" />
+<line x1="527.4" y1="13.2" x2="529.5" y2="11.2" />
+<line x1="398.5" y1="155.6" x2="396.9" y2="157.9" />
+<line x1="298.2" y1="286.5" x2="296.3" y2="288.3" />
+<line x1="297.1" y1="107.1" x2="298.6" y2="109.2" />
+<line x1="254.4" y1="100.3" x2="252.7" y2="98.8" />
+<line x1="300.0" y1="372.6" x2="298.3" y2="374.0" />
+<line x1="426.4" y1="249.9" x2="427.6" y2="251.5" />
+        </g>
+        <g stroke="#34343a" stroke-width="1.9" stroke-linecap="round">
+<line x1="188.1" y1="332.7" x2="225.0" y2="287.3" />
+<line x1="470.4" y1="295.4" x2="528.8" y2="292.9" />
+<line x1="164.6" y1="159.6" x2="157.9" y2="216.8" />
+<line x1="438.3" y1="47.8" x2="488.5" y2="75.9" />
+<line x1="355.7" y1="103.7" x2="298.6" y2="109.2" />
+<line x1="115.8" y1="110.0" x2="60.6" y2="104.8" />
+<line x1="216.1" y1="276.6" x2="164.4" y2="296.7" />
+<line x1="160.2" y1="115.1" x2="174.4" y2="62.1" />
+<line x1="122.8" y1="342.9" x2="120.0" y2="288.7" />
+<line x1="355.2" y1="207.4" x2="301.6" y2="199.3" />
+<line x1="298.2" y1="286.5" x2="352.3" y2="287.3" />
+<line x1="265.3" y1="382.1" x2="253.2" y2="329.5" />
+<line x1="446.8" y1="200.3" x2="426.4" y2="249.9" />
+<line x1="307.2" y1="57.3" x2="254.3" y2="49.6" />
+<line x1="489.5" y1="152.0" x2="469.1" y2="201.4" />
+<line x1="344.1" y1="243.7" x2="397.3" y2="246.6" />
+<line x1="20.3" y1="107.9" x2="11.5" y2="160.0" />
+<line x1="254.8" y1="153.0" x2="254.4" y2="100.3" />
+<line x1="260.1" y1="237.4" x2="212.2" y2="259.1" />
+<line x1="362.1" y1="199.8" x2="334.6" y2="155.7" />
+<line x1="297.6" y1="191.4" x2="247.2" y2="204.3" />
+<line x1="200.7" y1="188.8" x2="160.8" y2="221.4" />
+<line x1="25.8" y1="380.3" x2="76.9" y2="385.6" />
+<line x1="576.0" y1="271.7" x2="530.2" y2="294.2" />
+<line x1="169.3" y1="375.2" x2="219.4" y2="381.3" />
+<line x1="438.3" y1="42.0" x2="395.2" y2="17.6" />
+<line x1="304.0" y1="158.3" x2="254.8" y2="153.0" />
+<line x1="575.9" y1="331.3" x2="593.8" y2="285.4" />
+<line x1="352.2" y1="60.6" x2="345.8" y2="11.8" />
+<line x1="161.2" y1="225.9" x2="115.2" y2="243.0" />
+        </g>
+      </svg>
 
-                <!-- Navbar -->
-                <div class="flex justify-between items-center px-6 pt-14 pb-6">
-                    <div class="flex items-center gap-2.5">
-                        <svg class="w-5 h-5 text-[#0B4F4A]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                        <span class="font-semibold text-[13px] tracking-[0.2em] text-black">PROFILE</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <button class="w-9 h-9 rounded-full border border-black/10 flex items-center justify-center hover:bg-black/[0.03] transition" onclick="openMenu()" aria-label="Open menu">
-                            <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                        </button>
+      <div class="absolute inset-0 bg-black/20 z-[1]"></div>
 
-                        <!-- Distinctive avatar: octagonal seal shape with verified badge -->
-                        <div class="relative w-10 h-10">
-                            <div class="avatar-seal w-10 h-10 p-[2.5px] bg-[#0B4F4A]">
-                                <img id="mobileAvatarImg" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Profile" class="avatar-seal w-full h-full object-cover">
-                            </div>
-                            <div class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#0B4F4A] border-[2.5px] border-white flex items-center justify-center">
-                                <svg class="w-2 h-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <svg class="absolute top-0 left-0 w-full h-full opacity-90 z-10" viewBox="0 0 300 200" preserveAspectRatio="none">
+        <path d="M 70 150 Q 140 150 180 90 T 260 50" fill="transparent" stroke="#D8FF00" stroke-width="3" stroke-dasharray="5 5" />
+      </svg>
 
-                <!-- Main Info -->
-                <div class="px-6">
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-2">
-                            <span class="w-4 h-px bg-[#0B4F4A]"></span>
-                            <span class="text-[11px] font-semibold tracking-[0.18em] text-[#5B6472] uppercase">Product Designer</span>
-                        </div>
-                        <span class="border border-[#0B4F4A]/30 text-[#0B4F4A] px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide flex items-center gap-1.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#0B4F4A]"></span>
-                            Available
-                        </span>
-                    </div>
-
-                    <h1 class="font-display mt-3 text-[42px] font-medium tracking-tight text-black leading-[0.98]">
-                        <span id="mobileNameText">Ahmed<br>Mohammed</span>
-                        <span class="inline-flex items-center gap-2">
-                            <svg class="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="none">
-                                <path d="M12 2.5l2.32 1.2 2.6-.62 1.31 2.32 2.32 1.31-.62 2.6.62 2.6-2.32 1.31-1.31 2.32-2.6-.62L12 21.5l-2.32-1.2-2.6.62-1.31-2.32-2.32-1.31.62-2.6-.62-2.6 2.32-1.31 1.31-2.32 2.6.62L12 2.5z" fill="#0B4F4A"/>
-                                <path d="M8.3 12.4l2.3 2.3 4.6-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
-                    </h1>
-
-                    <p id="mobileBioText" class="mt-3 text-[13.5px] leading-relaxed text-[#5B6472]">
-                        I design clear, considered product interfaces — from early concepts to polished, shippable screens for startups and enterprise teams alike.
-                    </p>
-                </div>
-
-                <!-- Stat Strip -->
-                <div class="px-6 mt-6">
-                    <div class="rounded-[24px] border border-black/10 bg-white flex items-stretch overflow-hidden">
-                        <div class="flex-1 ">
-                            <span class="font-display block text-2xl font-medium text-black leading-none">5+</span>
-                            <span class="block mt-1.5 text-[11px] font-medium tracking-wide text-[#5B6472]">Years Experience</span>
-                        </div>
-                        <div class="w-px bg-black/10 my-3"></div>
-                        <div class="flex-1 ">
-                            <span class="font-display block text-2xl font-medium text-black leading-none">120+</span>
-                            <span class="block mt-1.5 text-[11px] font-medium tracking-wide text-[#5B6472]">Clients Served</span>
-                        </div>
-                        <div class="w-px bg-black/10 my-3"></div>
-                        <button class="px-5 flex items-center justify-center bg-[#0B4F4A] hover:bg-[#0e615a] transition group" aria-label="Hire Ahmed">
-                            <svg class="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                        </button>
-                    </div>
-                </div>
+      <div class="relative z-20 w-full h-full flex flex-col">
+        <div class="flex-1 relative w-full">
+          <div class="absolute bottom-6 left-12 flex flex-col items-center">
+            <span class="text-gray-200 text-[9px] mb-1.5 font-medium tracking-wide drop-shadow-md">Your location</span>
+            <div class="w-2 h-2 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,1)] relative">
+              <div class="absolute -inset-[4px] rounded-full border-[1.5px] border-white/40"></div>
             </div>
+          </div>
 
-            <!-- Middle Action Buttons -->
-            <div class="px-6 py-6 flex justify-between gap-3 relative z-0">
-                <button class="flex-1 bg-[#1c1c1e] text-white border border-[#333333] rounded-full py-3.5 text-[15px] font-medium flex items-center justify-center gap-2 hover:bg-[#2c2c2e] transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                    Email
-                </button>
-                <button class="flex-1 bg-[#1c1c1e] text-white border border-[#333333] rounded-full py-3.5 text-[15px] font-medium flex items-center justify-center gap-2 hover:bg-[#2c2c2e] transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    Resume
-                </button>
-                <button class="w-[52px] h-[52px] bg-[#1c1c1e] text-white border border-[#333333] rounded-full flex items-center justify-center hover:bg-[#2c2c2e] transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/></svg>
-                </button>
+          <div class="absolute top-8 right-6 flex flex-col items-center text-neon drop-shadow-lg">
+            <span class="text-[11px] mb-0.5 font-bold tracking-wide">Westside</span>
+            <div class="relative">
+              <i class="fa-solid fa-location-dot text-[28px] drop-shadow-[0_0_12px_rgba(214,255,0,0.6)]"></i>
+              <div class="w-2 h-2 bg-black rounded-full absolute top-[8px] left-1/2 -translate-x-1/2"></div>
             </div>
-
-            <!-- Bottom Links List -->
-            <div class="bg-white flex-1 rounded-t-[40px] px-6 pt-8 pb-10 flex flex-col hide-scroll overflow-y-auto">
-
-                <div class="flex justify-between items-center mb-5">
-                    <h2 class="text-lg font-bold text-black">My Links</h2>
-                    <span class="text-sm text-gray-400 hover:text-gray-700 cursor-pointer flex items-center gap-1">View all <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
-                </div>
-
-                <!-- Filter Pills -->
-                <div class="flex gap-2 mb-6 hide-scroll overflow-x-auto">
-                    <span class="px-4 py-1.5 bg-pink-50 text-pink-600 rounded-full text-xs font-semibold whitespace-nowrap cursor-pointer">Social</span>
-                    <span class="px-4 py-1.5 bg-gray-50 text-gray-500 border border-gray-200 rounded-full text-xs font-medium whitespace-nowrap cursor-pointer hover:bg-gray-100">Design</span>
-                    <span class="px-4 py-1.5 bg-gray-50 text-gray-500 border border-gray-200 rounded-full text-xs font-medium whitespace-nowrap cursor-pointer hover:bg-gray-100">Coding</span>
-                </div>
-
-                <div class="flex flex-col gap-4" id="mobileLinksList">
-
-                    <!-- Behance / Portfolio -->
-                    <a href="#" class="flex items-center group">
-                        <div class="w-12 h-12 bg-[#E3E8FF] text-[#0057ff] rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14h-8.027c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.226-2.477-2.226-1.48 0-2.352.836-2.488 2.226zm-9.351 4h-6.689v-14h7.02c3.486 0 5.064 1.583 5.064 3.784 0 1.503-.941 2.809-2.473 3.336 1.637.491 2.852 1.848 2.852 3.593 0 2.261-1.758 3.287-5.774 3.287zm-2.839-8.498h3.335c1.472 0 2.353-.615 2.353-1.87 0-1.282-.932-1.845-2.261-1.845h-3.427v3.715zm0 5.498h3.692c1.789 0 2.868-.691 2.868-2.188 0-1.423-1.079-2.096-2.812-2.096h-3.748v4.284z"/></svg>
-                        </div>
-                        <div class="flex-1 ml-4 border-b border-gray-100 pb-3 mt-3">
-                            <h3 class="font-bold text-gray-900 text-[15px]">Behance</h3>
-                            <p class="text-[13px] text-gray-500 mt-0.5">Portfolio & Case Studies</p>
-                        </div>
-                        <div class="text-sm font-semibold text-gray-900 border-b border-gray-100 pb-3 mt-3">
-                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                        </div>
-                    </a>
-
-                    <!-- LinkedIn -->
-                    <a href="#" class="flex items-center group">
-                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </div>
-                        <div class="flex-1 ml-4 border-b border-gray-100 pb-3 mt-3">
-                            <h3 class="font-bold text-gray-900 text-[15px]">LinkedIn</h3>
-                            <p class="text-[13px] text-gray-500 mt-0.5">Professional Network</p>
-                        </div>
-                        <div class="text-sm font-semibold text-gray-900 border-b border-gray-100 pb-3 mt-3">
-                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                        </div>
-                    </a>
-
-                    <!-- Instagram -->
-                    <a href="#" class="flex items-center group">
-                        <div class="w-12 h-12 bg-pink-50 text-pink-600 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                        </div>
-                        <div class="flex-1 ml-4 border-b border-gray-100 pb-3 mt-3">
-                            <h3 class="font-bold text-gray-900 text-[15px]">Instagram</h3>
-                            <p class="text-[13px] text-gray-500 mt-0.5">Daily Life & Design</p>
-                        </div>
-                        <div class="text-sm font-semibold text-gray-900 border-b border-gray-100 pb-3 mt-3">
-                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                        </div>
-                    </a>
-
-                    <!-- X (Twitter) -->
-                    <a href="#" class="flex items-center group">
-                        <div class="w-12 h-12 bg-gray-100 text-black rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        </div>
-                        <div class="flex-1 ml-4 pb-3 mt-3">
-                            <h3 class="font-bold text-gray-900 text-[15px]">X (Twitter)</h3>
-                            <p class="text-[13px] text-gray-500 mt-0.5">Thoughts & Updates</p>
-                        </div>
-                        <div class="text-sm font-semibold text-gray-900 pb-3 mt-3">
-                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                        </div>
-                    </a>
-
-                </div>
-            </div>
+          </div>
         </div>
+
+        <div class="p-4 flex justify-end">
+          <button class="bg-white text-black font-semibold rounded-[2rem] px-7 py-3.5 text-[13px] shadow-lg transition transform active:scale-95 hover:bg-gray-100">Confirm</button>
+        </div>
+      </div>
     </div>
 
-    <!-- ======================= DESKTOP / LAPTOP ======================= -->
-    <div class="hidden lg:flex min-h-screen bg-white">
+    <div class="flex flex-col gap-3.5 mt-5">
 
-        <!-- Sticky sidebar: identity, bio, stats, actions -->
-        <aside class="w-[400px] xl:w-[440px] flex-shrink-0 border-r border-black/10 h-screen sticky top-0 flex flex-col px-12 py-12 overflow-y-auto hide-scroll">
+      <div class="bg-neon rounded-[38px] flex justify-between items-center py-2.5 pl-8 pr-2.5 shadow-sm cursor-pointer transition transform active:scale-[0.98]">
+        <div class="flex flex-col justify-center gap-0.5">
+          <h3 class="font-bold text-gray-900 text-[21px] leading-tight tracking-tight">Book a ride</h3>
+          <p class="text-gray-700/80 text-[12.5px] font-medium">Nearest car 2 min away</p>
+        </div>
+        <div class="bg-dark-bg w-[54px] h-[54px] rounded-full flex items-center justify-center text-white shadow-md">
+          <i class="fa-solid fa-arrow-right text-[16px]"></i>
+        </div>
+      </div>
 
-            <div class="flex items-center gap-2.5 mb-16">
-                <svg class="w-5 h-5 text-[#0B4F4A]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                <span class="font-semibold text-[13px] tracking-[0.25em] text-black">PROFILE</span>
-            </div>
+      <div class="flex gap-3">
+        <div class="bg-[#e9eaec] rounded-[32px] flex-1 pt-7 pb-6 px-8 flex flex-col justify-center items-start shadow-sm">
+          <span class="text-[44px] font-semibold text-gray-900 leading-[1] tracking-tighter">12</span>
+          <span class="text-gray-400 text-[12px] font-medium mt-1">Rides taken</span>
+        </div>
 
-            <!-- Avatar + verified badge -->
-            <div class="relative w-20 h-20 mb-8">
-                <div class="avatar-seal w-20 h-20 p-[3px] bg-[#0B4F4A]">
-                    <img id="desktopAvatarImg" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Profile" class="avatar-seal w-full h-full object-cover">
-                </div>
-                <div class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-[#0B4F4A] border-[3px] border-white flex items-center justify-center">
-                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                </div>
-            </div>
+        <div class="bg-dark-bg rounded-[32px] flex-[1.1] pt-7 pb-6 px-8 flex flex-col justify-center items-start shadow-sm">
+          <div class="flex items-center gap-1.5">
+            <i class="fa-solid fa-star text-neon text-[20px] pb-1"></i>
+            <span class="text-[38px] font-semibold text-neon leading-[1] tracking-tighter">320<span class="text-[18px] font-medium ml-1 tracking-normal">pts</span></span>
+          </div>
+          <span class="text-gray-500 text-[12px] font-medium mt-1">Rewards</span>
+        </div>
+      </div>
 
-            <div class="flex items-center gap-2 mb-3">
-                <span class="w-4 h-px bg-[#0B4F4A]"></span>
-                <span class="text-[11px] font-semibold tracking-[0.18em] text-[#5B6472] uppercase">Product Designer</span>
-            </div>
-
-            <h1 class="font-display text-[36px] xl:text-[40px] font-medium tracking-tight text-black leading-[1.02]">
-                <span class="inline-flex items-center flex-wrap gap-2">
-                    <span id="desktopNameText">Ahmed Mohammed</span>
-                    <svg class="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2.5l2.32 1.2 2.6-.62 1.31 2.32 2.32 1.31-.62 2.6.62 2.6-2.32 1.31-1.31 2.32-2.6-.62L12 21.5l-2.32-1.2-2.6.62-1.31-2.32-2.32-1.31.62-2.6-.62-2.6 2.32-1.31 1.31-2.32 2.6.62L12 2.5z" fill="#0B4F4A"/>
-                        <path d="M8.3 12.4l2.3 2.3 4.6-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-            </h1>
-
-            <span class="inline-flex items-center gap-1.5 w-fit mt-5 border border-[#0B4F4A]/30 text-[#0B4F4A] px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#0B4F4A]"></span>
-                Available for work
-            </span>
-
-            <p id="desktopBioText" class="mt-6 text-[14.5px] leading-relaxed text-[#5B6472]">
-                I design clear, considered product interfaces — from early concepts to polished, shippable screens for startups and enterprise teams alike.
-            </p>
-
-            <!-- Stats as a spec sheet -->
-            <div class="mt-10 border-t border-black/10">
-                <div class="flex items-center justify-between py-4 border-b border-black/10">
-                    <span class="text-[11px] font-medium tracking-wide text-[#5B6472] uppercase">Experience</span>
-                    <span class="font-display text-xl font-medium text-black">5+ yrs</span>
-                </div>
-                <div class="flex items-center justify-between py-4 border-b border-black/10">
-                    <span class="text-[11px] font-medium tracking-wide text-[#5B6472] uppercase">Clients served</span>
-                    <span class="font-display text-xl font-medium text-black">120+</span>
-                </div>
-            </div>
-
-            <!-- Actions pinned to the bottom of the sidebar -->
-            <div class="mt-auto pt-10 flex flex-col gap-3">
-                <button class="w-full bg-[#0B4F4A] hover:bg-[#0e615a] transition text-white rounded-full py-3.5 text-sm font-medium flex items-center justify-center gap-2 group">
-                    Hire Ahmed
-                    <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                </button>
-                <div class="flex gap-3">
-                    <button class="flex-1 bg-[#1c1c1e] text-white border border-[#333333] rounded-full py-3 text-[13px] font-medium flex items-center justify-center gap-2 hover:bg-[#2c2c2e] transition">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                        Email
-                    </button>
-                    <button class="flex-1 bg-[#1c1c1e] text-white border border-[#333333] rounded-full py-3 text-[13px] font-medium flex items-center justify-center gap-2 hover:bg-[#2c2c2e] transition">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                        Resume
-                    </button>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main: editorial index of links -->
-        <main class="flex-1 bg-[#FAFAF9] px-16 xl:px-24 py-14 h-screen overflow-y-auto">
-            <div class="max-w-3xl">
-
-                <div class="flex items-end justify-between mb-4">
-                    <h2 class="font-display text-4xl xl:text-5xl font-medium text-black">Selected Links</h2>
-                    <span class="text-sm text-gray-400 hover:text-gray-700 cursor-pointer flex items-center gap-1 mb-1">View all <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
-                </div>
-
-                <p class="text-[14.5px] text-[#5B6472] mb-10">Work, presence, and everything else — in order of where to look first.</p>
-
-                <!-- Filter Pills -->
-                <div class="flex gap-2 mb-2">
-                    <span class="px-4 py-1.5 bg-pink-50 text-pink-600 rounded-full text-xs font-semibold whitespace-nowrap cursor-pointer">Social</span>
-                    <span class="px-4 py-1.5 bg-white text-gray-500 border border-gray-200 rounded-full text-xs font-medium whitespace-nowrap cursor-pointer hover:bg-gray-50">Design</span>
-                    <span class="px-4 py-1.5 bg-white text-gray-500 border border-gray-200 rounded-full text-xs font-medium whitespace-nowrap cursor-pointer hover:bg-gray-50">Coding</span>
-                </div>
-
-                <div class="flex flex-col mt-4" id="desktopLinksList">
-
-                    <!-- 01 Behance -->
-                    <a href="#" class="group flex items-center gap-6 py-7 border-b border-black/10 hover:pl-3 transition-[padding] duration-300">
-                        <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0 link-index">01</span>
-                        <div class="w-12 h-12 bg-[#E3E8FF] text-[#0057ff] rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14h-8.027c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.226-2.477-2.226-1.48 0-2.352.836-2.488 2.226zm-9.351 4h-6.689v-14h7.02c3.486 0 5.064 1.583 5.064 3.784 0 1.503-.941 2.809-2.473 3.336 1.637.491 2.852 1.848 2.852 3.593 0 2.261-1.758 3.287-5.774 3.287zm-2.839-8.498h3.335c1.472 0 2.353-.615 2.353-1.87 0-1.282-.932-1.845-2.261-1.845h-3.427v3.715zm0 5.498h3.692c1.789 0 2.868-.691 2.868-2.188 0-1.423-1.079-2.096-2.812-2.096h-3.748v4.284z"/></svg>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-display text-xl text-black group-hover:text-[#0B4F4A] transition-colors">Behance</h3>
-                            <p class="text-[13.5px] text-[#5B6472] mt-0.5">Portfolio & Case Studies</p>
-                        </div>
-                        <svg class="w-4 h-4 text-[#0B4F4A] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                    </a>
-
-                    <!-- 02 LinkedIn -->
-                    <a href="#" class="group flex items-center gap-6 py-7 border-b border-black/10 hover:pl-3 transition-[padding] duration-300">
-                        <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0 link-index">02</span>
-                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-display text-xl text-black group-hover:text-[#0B4F4A] transition-colors">LinkedIn</h3>
-                            <p class="text-[13.5px] text-[#5B6472] mt-0.5">Professional Network</p>
-                        </div>
-                        <svg class="w-4 h-4 text-[#0B4F4A] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                    </a>
-
-                    <!-- 03 Instagram -->
-                    <a href="#" class="group flex items-center gap-6 py-7 border-b border-black/10 hover:pl-3 transition-[padding] duration-300">
-                        <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0 link-index">03</span>
-                        <div class="w-12 h-12 bg-pink-50 text-pink-600 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-display text-xl text-black group-hover:text-[#0B4F4A] transition-colors">Instagram</h3>
-                            <p class="text-[13.5px] text-[#5B6472] mt-0.5">Daily Life & Design</p>
-                        </div>
-                        <svg class="w-4 h-4 text-[#0B4F4A] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                    </a>
-
-                    <!-- 04 X (Twitter) -->
-                    <a href="#" class="group flex items-center gap-6 py-7 border-b border-black/10 hover:pl-3 transition-[padding] duration-300">
-                        <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0 link-index">04</span>
-                        <div class="w-12 h-12 bg-gray-100 text-black rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-display text-xl text-black group-hover:text-[#0B4F4A] transition-colors">X (Twitter)</h3>
-                            <p class="text-[13.5px] text-[#5B6472] mt-0.5">Thoughts & Updates</p>
-                        </div>
-                        <svg class="w-4 h-4 text-[#0B4F4A] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                    </a>
-
-                </div>
-            </div>
-        </main>
+      <div class="flex justify-between items-center w-full mt-1.5">
+        <a href="#" class="bg-neon w-[74px] h-[74px] rounded-full flex items-center justify-center text-gray-900 text-[22px] shadow-sm transition transform active:scale-95">
+          <i class="fa-solid fa-house"></i>
+        </a>
+        <a href="#" class="bg-[#e9eaec] w-[74px] h-[74px] rounded-full flex items-center justify-center text-[#1c1c1e] text-[22px] transition active:bg-gray-300">
+          <i class="fa-solid fa-car"></i>
+        </a>
+        <a href="#" class="bg-[#e9eaec] w-[74px] h-[74px] rounded-full flex items-center justify-center text-[#1c1c1e] text-[22px] transition active:bg-gray-300">
+          <i class="fa-solid fa-clock"></i>
+        </a>
+        <a href="#" class="bg-[#e9eaec] w-[74px] h-[74px] rounded-full flex items-center justify-center text-[#1c1c1e] text-[22px] transition active:bg-gray-300">
+          <i class="fa-solid fa-gear"></i>
+        </a>
+      </div>
     </div>
-
-    <script>
-        // ===== Menu open/close =====
-        function openMenu() {
-            document.getElementById('menuOverlay').classList.add('open');
-            document.getElementById('menuDrawer').classList.add('open');
-        }
-        function closeMenu() {
-            document.getElementById('menuOverlay').classList.remove('open');
-            document.getElementById('menuDrawer').classList.remove('open');
-        }
-
-        // ===== Change photo =====
-        function handleAvatarChange(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const dataUrl = e.target.result;
-                document.getElementById('drawerAvatarPreview').src = dataUrl;
-                document.getElementById('mobileAvatarImg').src = dataUrl;
-                document.getElementById('desktopAvatarImg').src = dataUrl;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // ===== Edit name =====
-        function handleNameChange(event) {
-            const value = event.target.value.trim() || 'Ahmed Mohammed';
-            document.getElementById('desktopNameText').textContent = value;
-
-            // Mobile keeps the two-line big-title look: split into first word / rest
-            const parts = value.split(' ');
-            const first = parts.shift();
-            const rest = parts.join(' ');
-            const mobileEl = document.getElementById('mobileNameText');
-            mobileEl.innerHTML = rest ? (first + '<br>' + rest) : first;
-        }
-
-        // ===== Edit bio =====
-        function handleBioChange(event) {
-            const value = event.target.value;
-            document.getElementById('mobileBioText').textContent = value;
-            document.getElementById('desktopBioText').textContent = value;
-        }
-
-        // ===== Add new link =====
-        function addNewLink() {
-            const titleInput = document.getElementById('newLinkTitle');
-            const descInput = document.getElementById('newLinkDesc');
-            const urlInput = document.getElementById('newLinkUrl');
-
-            const title = titleInput.value.trim();
-            const desc = descInput.value.trim() || 'Added link';
-            const url = urlInput.value.trim() || '#';
-
-            if (!title) {
-                titleInput.focus();
-                return;
-            }
-
-            // --- Append to mobile list ---
-            const mobileList = document.getElementById('mobileLinksList');
-            const mobileItem = document.createElement('a');
-            mobileItem.href = url;
-            mobileItem.target = '_blank';
-            mobileItem.rel = 'noopener noreferrer';
-            mobileItem.className = 'flex items-center group';
-            mobileItem.innerHTML = `
-                <div class="w-12 h-12 bg-gray-100 text-[#0B4F4A] rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 010 5.656l-3 3a4 4 0 01-5.656-5.656l1.5-1.5M10.172 13.828a4 4 0 010-5.656l3-3a4 4 0 015.656 5.656l-1.5 1.5"/></svg>
-                </div>
-                <div class="flex-1 ml-4 border-b border-gray-100 pb-3 mt-3">
-                    <h3 class="font-bold text-gray-900 text-[15px]">${escapeHtml(title)}</h3>
-                    <p class="text-[13px] text-gray-500 mt-0.5">${escapeHtml(desc)}</p>
-                </div>
-                <div class="text-sm font-semibold text-gray-900 border-b border-gray-100 pb-3 mt-3">
-                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </div>
-            `;
-            mobileList.appendChild(mobileItem);
-
-            // --- Append to desktop list ---
-            const desktopList = document.getElementById('desktopLinksList');
-            const index = desktopList.querySelectorAll('a').length + 1;
-            const desktopItem = document.createElement('a');
-            desktopItem.href = url;
-            desktopItem.target = '_blank';
-            desktopItem.rel = 'noopener noreferrer';
-            desktopItem.className = 'group flex items-center gap-6 py-7 border-b border-black/10 hover:pl-3 transition-[padding] duration-300';
-            desktopItem.innerHTML = `
-                <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0 link-index">${String(index).padStart(2, '0')}</span>
-                <div class="w-12 h-12 bg-gray-100 text-[#0B4F4A] rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 010 5.656l-3 3a4 4 0 01-5.656-5.656l1.5-1.5M10.172 13.828a4 4 0 010-5.656l3-3a4 4 0 015.656 5.656l-1.5 1.5"/></svg>
-                </div>
-                <div class="flex-1">
-                    <h3 class="font-display text-xl text-black group-hover:text-[#0B4F4A] transition-colors">${escapeHtml(title)}</h3>
-                    <p class="text-[13.5px] text-[#5B6472] mt-0.5">${escapeHtml(desc)}</p>
-                </div>
-                <svg class="w-4 h-4 text-[#0B4F4A] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            `;
-            desktopList.appendChild(desktopItem);
-
-            // Reset fields
-            titleInput.value = '';
-            descInput.value = '';
-            urlInput.value = '';
-        }
-
-        function escapeHtml(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        // ===== Quick Add Popular Socials (added) =====
-        const POPULAR_SOCIALS = [
-            {
-                key: 'facebook', title: 'Facebook', desc: 'Friends & Community', url: 'https://facebook.com',
-                bg: '#E7EEFB', color: '#1877F2',
-                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.324v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>'
-            },
-            {
-                key: 'threads', title: 'Threads', desc: 'Conversations & Updates', url: 'https://threads.net',
-                bg: '#111111', color: '#ffffff',
-                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.5 2C6.7 2 3 6.1 3 12s3.7 10 9.5 10c3.3 0 5.9-1.2 7.6-3.4l-2.1-1.5c-1.2 1.5-2.9 2.3-5.2 2.3-3.4 0-5.7-1.9-6.1-5h13.9c.1-.5.1-1 .1-1.5C20.7 6.5 17.6 2 12.5 2zm-5.3 8.4c.4-2.5 2.3-4.1 5.1-4.1 2.9 0 4.7 1.5 5.1 4.1H7.2z"/></svg>'
-            },
-            {
-                key: 'tiktok', title: 'TikTok', desc: 'Short Videos', url: 'https://tiktok.com',
-                bg: '#111111', color: '#ffffff',
-                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>'
-            },
-            {
-                key: 'youtube', title: 'YouTube', desc: 'Videos & Tutorials', url: 'https://youtube.com',
-                bg: '#FDE9E9', color: '#FF0000',
-                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a2.994 2.994 0 0 0-2.107-2.117C19.59 3.5 12 3.5 12 3.5s-7.59 0-9.391.569A2.994 2.994 0 0 0 .502 6.186 31.36 31.36 0 0 0 0 12a31.36 31.36 0 0 0 .502 5.814 2.994 2.994 0 0 0 2.107 2.117C4.41 20.5 12 20.5 12 20.5s7.59 0 9.391-.569a2.994 2.994 0 0 0 2.107-2.117A31.36 31.36 0 0 0 24 12a31.36 31.36 0 0 0-.502-5.814zM9.75 15.568V8.432L15.818 12l-6.068 3.568z"/></svg>'
-            },
-            {
-                key: 'whatsapp', title: 'WhatsApp', desc: 'Message Me', url: 'https://wa.me/',
-                bg: '#E6F8EE', color: '#25D366',
-                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.437 0 .086 5.351.086 11.945c0 2.107.55 4.166 1.594 5.984L0 24l6.223-1.632a11.9 11.9 0 0 0 5.805 1.478h.005c6.594 0 11.945-5.351 11.945-11.945C24.978 5.35 19.629.002 12.031 0zm6.994 16.976c-.294.827-1.454 1.514-2.394 1.716-.636.135-1.466.243-4.264-.917-3.579-1.481-5.885-5.115-6.064-5.352-.174-.237-1.454-1.937-1.454-3.696s.913-2.622 1.239-2.981c.294-.324.639-.405.852-.405.213 0 .426.002.612.011.196.009.459-.074.718.548.294.706.998 2.436 1.086 2.614.087.174.145.377.029.611-.113.235-.174.377-.348.577-.174.201-.365.449-.522.605-.174.174-.353.362-.152.71.201.348.895 1.477 1.922 2.393 1.32 1.176 2.434 1.542 2.782 1.716.348.174.552.145.756-.087.201-.235.867-1.014 1.098-1.362.235-.348.469-.29.79-.174.32.116 2.032.958 2.379 1.132.348.174.582.261.669.406.087.145.087.833-.207 1.66z"/></svg>'
-            },
-            {
-                key: 'telegram', title: 'Telegram', desc: 'Chat & Channel', url: 'https://t.me/',
-                bg: '#E7F4FC', color: '#26A5E4',
-                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-1.98.94l-5.5-4.07-2.66 2.56c-.29.29-.54.54-1.1.54l.39-5.56 10.09-9.09c.44-.39-.1-.6-.68-.22L7.68 13.99l-5.29-1.65c-1.14-.36-1.15-1.14.24-1.68l20.6-7.94c.94-.34 1.77.22 1.68 1.07z"/></svg>'
-            },
-            {
-                key: 'snapchat', title: 'Snapchat', desc: 'Daily Moments', url: 'https://snapchat.com',
-                bg: '#FFF9DB', color: '#111111',
-                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.006 0C8.706 0 5.897 2.5 5.897 5.5c0 .3.03.6.06.9-.36-.1-.75-.15-1.14-.15-1.83 0-3.3 1.35-3.3 3 0 .9.45 1.65 1.14 2.1-.42.15-.75.45-.75.9 0 .75.9 1.35 2.1 1.5-.06.15-.09.3-.09.45 0 1.05 1.29 1.8 3 1.8.36 0 .69-.03 1.02-.09.51 1.5 2.19 2.55 4.08 2.55s3.57-1.05 4.08-2.55c.33.06.66.09 1.02.09 1.71 0 3-.75 3-1.8 0-.15-.03-.3-.09-.45 1.2-.15 2.1-.75 2.1-1.5 0-.45-.33-.75-.75-.9.69-.45 1.14-1.2 1.14-2.1 0-1.65-1.47-3-3.3-3-.39 0-.78.05-1.14.15.03-.3.06-.6.06-.9C18.115 2.5 15.306 0 12.006 0z"/></svg>'
-            },
-            {
-                key: 'pinterest', title: 'Pinterest', desc: 'Inspiration Boards', url: 'https://pinterest.com',
-                bg: '#FDEBEC', color: '#E60023',
-                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0a12 12 0 0 0-4.373 23.178c-.035-.947-.006-2.08.235-3.107.259-1.1 1.729-7.32 1.729-7.32s-.44-.879-.44-2.179c0-2.04 1.183-3.564 2.657-3.564 1.252 0 1.858.94 1.858 2.066 0 1.259-.802 3.14-1.216 4.884-.346 1.46.732 2.65 2.172 2.65 2.605 0 4.612-2.746 4.612-6.71 0-3.507-2.52-5.958-6.118-5.958-4.168 0-6.615 3.128-6.615 6.36 0 1.259.485 2.611 1.09 3.345.12.146.137.273.101.421-.11.458-.354 1.46-.402 1.66-.063.266-.209.322-.482.194-1.797-.837-2.921-3.465-2.921-5.576 0-4.541 3.299-8.716 9.51-8.716 4.994 0 8.876 3.556 8.876 8.312 0 4.958-3.126 8.947-7.463 8.947-1.457 0-2.828-.757-3.296-1.652l-.897 3.417c-.324 1.25-1.203 2.815-1.79 3.771A12 12 0 1 0 12 0z"/></svg>'
-            },
-            {
-                key: 'github', title: 'GitHub', desc: 'Code & Projects', url: 'https://github.com',
-                bg: '#F2F2F2', color: '#111111',
-                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>'
-            },
-            {
-                key: 'discord', title: 'Discord', desc: 'Community Server', url: 'https://discord.com',
-                bg: '#EEE9FB', color: '#5865F2',
-                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.099.246.198.373.291a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.076.076 0 0 0-.04.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.548-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.955 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>'
-            },
-            {
-                key: 'dribbble', title: 'Dribbble', desc: 'Design Shots', url: 'https://dribbble.com',
-                bg: '#FCE9F1', color: '#EA4C89',
-                svg: '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm9.885 11.169c-.14-.021-2.523-.514-4.943-.221-.096-.204-.191-.418-.297-.628-.298-.628-.626-1.264-.978-1.882 2.68-1.096 3.902-2.671 3.919-2.691a10.116 10.116 0 0 1 2.299 5.422zm-3.833-6.879c-.017.02-1.096 1.5-3.674 2.454A44.06 44.06 0 0 0 10.9 2.6a10.076 10.076 0 0 1 7.152 1.69zM8.665 2.996c.079.135 1.564 2.688 2.99 5.62-3.865 1.028-7.286 1.009-7.641 1.008a10.13 10.13 0 0 1 4.651-6.628zm-5.026 8.858c.081.001 4.184.01 8.596-1.24.239.489.464.988.671 1.487-.11.031-.222.061-.331.096-4.617 1.502-6.937 5.63-7.033 5.809a10.037 10.037 0 0 1-1.903-6.152zm2.905 7.703c.077-.147 1.906-3.86 6.101-5.35.02-.007.038-.011.058-.018a30.68 30.68 0 0 1 1.552 6.313 10.078 10.078 0 0 1-7.711-.945zm9.564.148a32.706 32.706 0 0 0-1.4-6.014c2.25-.36 4.208.229 4.442.303a10.09 10.09 0 0 1-3.042 5.711z"/></svg>'
-            }
-        ];
-
-        function renderQuickSocialGrid() {
-            const grid = document.getElementById('quickSocialGrid');
-            grid.innerHTML = POPULAR_SOCIALS.map(item => `
-                <button type="button" class="quick-social-btn" id="quickBtn-${item.key}" onclick="addPredefinedLink('${item.key}')">
-                    <span class="qs-icon" style="background:${item.bg};color:${item.color}">${item.svg}</span>
-                    <span class="qs-label">${item.title}</span>
-                </button>
-            `).join('');
-        }
-
-        function addPredefinedLink(key) {
-            const item = POPULAR_SOCIALS.find(s => s.key === key);
-            if (!item) return;
-
-            const btn = document.getElementById('quickBtn-' + key);
-            if (btn && btn.classList.contains('added')) return;
-
-            // --- Append to mobile list ---
-            const mobileList = document.getElementById('mobileLinksList');
-            const mobileItem = document.createElement('a');
-            mobileItem.href = item.url;
-            mobileItem.target = '_blank';
-            mobileItem.rel = 'noopener noreferrer';
-            mobileItem.className = 'flex items-center group';
-            mobileItem.innerHTML = `
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform" style="background:${item.bg};color:${item.color}">
-                    ${item.svg}
-                </div>
-                <div class="flex-1 ml-4 border-b border-gray-100 pb-3 mt-3">
-                    <h3 class="font-bold text-gray-900 text-[15px]">${escapeHtml(item.title)}</h3>
-                    <p class="text-[13px] text-gray-500 mt-0.5">${escapeHtml(item.desc)}</p>
-                </div>
-                <div class="text-sm font-semibold text-gray-900 border-b border-gray-100 pb-3 mt-3">
-                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </div>
-            `;
-            mobileList.appendChild(mobileItem);
-
-            // --- Append to desktop list ---
-            const desktopList = document.getElementById('desktopLinksList');
-            const index = desktopList.querySelectorAll('a').length + 1;
-            const desktopItem = document.createElement('a');
-            desktopItem.href = item.url;
-            desktopItem.target = '_blank';
-            desktopItem.rel = 'noopener noreferrer';
-            desktopItem.className = 'group flex items-center gap-6 py-7 border-b border-black/10 hover:pl-3 transition-[padding] duration-300';
-            desktopItem.innerHTML = `
-                <span class="font-display text-sm text-[#0B4F4A] w-6 flex-shrink-0 link-index">${String(index).padStart(2, '0')}</span>
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform" style="background:${item.bg};color:${item.color}">
-                    ${item.svg}
-                </div>
-                <div class="flex-1">
-                    <h3 class="font-display text-xl text-black group-hover:text-[#0B4F4A] transition-colors">${escapeHtml(item.title)}</h3>
-                    <p class="text-[13.5px] text-[#5B6472] mt-0.5">${escapeHtml(item.desc)}</p>
-                </div>
-                <svg class="w-4 h-4 text-[#0B4F4A] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            `;
-            desktopList.appendChild(desktopItem);
-
-            // Mark this quick-add button as already added
-            if (btn) {
-                btn.classList.add('added');
-            }
-        }
-
-        // Build the quick-add grid on load
-        renderQuickSocialGrid();
-    </script>
-
+  </main>
 </body>
 </html>
