@@ -10,9 +10,15 @@
 <style>
   * { font-family: 'Plus Jakarta Sans', sans-serif; }
   body { background: #E5E7EB; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-  .app-container { max-width: 414px; width: 100%; margin: 0 auto; background: #F4F5F7; min-height: 100vh; position: relative; overflow-y: auto; overflow-x: hidden; -ms-overflow-style: none; scrollbar-width: none; }
+  .app-container { 
+    max-width: 414px; width: 100%; margin: 0 auto; 
+    background: #F4F5F7; min-height: 100vh; position: relative; 
+    overflow-y: auto; overflow-x: hidden; 
+    -ms-overflow-style: none; scrollbar-width: none; 
+    padding-bottom: 120px; /* Increased space for the floating bottom nav */
+  }
   .app-container::-webkit-scrollbar { display: none; }
-  .smooth-shadow { box-shadow: 0 12px 32px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.02); }
+  .smooth-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
   
   .toggle-checkbox:checked { right: 0; border-color: #ffffff; }
   .toggle-checkbox:checked + .toggle-label { background-color: #c8f331; }
@@ -21,13 +27,15 @@
   .toggle-thumb { width: 20px; height: 20px; background-color: white; border-radius: 50%; position: absolute; top: 3px; left: 3px; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
   .toggle-checkbox:checked ~ .toggle-thumb { transform: translateX(18px); }
   
-  .swoosh-graphic { background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(220,225,230,0.5) 100%); filter: drop-shadow(0 10px 15px rgba(0,0,0,0.05)); }
+  .navbtn { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8e939a; transition: color 0.2s; }
+  .navbtn.active { color: #101112; }
 </style>
 </head>
 <body>
 
-<div class="app-container pb-10">
+<div class="app-container">
   
+  <!-- Top Bar -->
   <div class="px-6 pt-12 flex items-center justify-between">
     <button class="w-[46px] h-[46px] rounded-full bg-white smooth-shadow flex items-center justify-center text-[#101112]">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -35,45 +43,46 @@
         <circle cx="12" cy="12" r="3"></circle>
       </svg>
     </button>
-    <h1 class="text-[19px] font-bold text-[#101112] tracking-tight">Home</h1>
-    <button class="w-[46px] h-[46px] rounded-full bg-white smooth-shadow flex items-center justify-center text-[#101112] pl-1">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
-        <path d="M22 2L11 13"></path>
-        <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
+    <h1 class="text-[17px] font-semibold text-[#101112]">Home</h1>
+    <button class="w-[46px] h-[46px] rounded-full bg-white smooth-shadow flex items-center justify-center text-[#101112]">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="-ml-1 -mt-1">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
       </svg>
     </button>
   </div>
 
+  <!-- Main Profile Card -->
   <div class="px-6 mt-8">
     <div class="bg-white rounded-[32px] smooth-shadow p-6 relative">
       <div class="flex items-start justify-between">
         <div class="mt-2">
-          <p class="text-[15px] font-semibold text-[#101112] leading-tight">Business</p>
-          <p class="text-[14px] text-[#9A9EA6] mt-0.5">profile</p>
+          <p class="text-[15px] text-[#101112] font-medium leading-tight">Business</p>
+          <p class="text-[14px] text-[#9A9EA6] font-normal mt-0.5">profile</p>
         </div>
         <div class="relative w-[84px] h-[84px] rounded-full p-1 bg-white ml-2">
           <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80" alt="Robert Fox" class="w-full h-full rounded-full object-cover" />
         </div>
         <div class="text-right mt-1">
-          <p class="text-[34px] font-extrabold text-[#101112] leading-none tracking-tight">36+</p>
-          <p class="text-[13px] font-medium text-[#9A9EA6] mt-1.5">Connected</p>
+          <p class="text-[34px] font-semibold text-[#101112] leading-none tracking-tight">36+</p>
+          <p class="text-[12px] font-normal text-[#9A9EA6] mt-1.5">Connected</p>
         </div>
       </div>
       
       <div class="text-center mt-3">
-        <h2 class="text-[26px] font-extrabold text-[#101112] tracking-tight">Robert Fox</h2>
-        <p class="text-[14px] text-[#9A9EA6] mt-0.5 font-medium">CEO at Orbix Design studio</p>
+        <h2 class="text-[22px] font-semibold text-[#101112]">Robert Fox</h2>
+        <p class="text-[13px] text-[#9A9EA6] mt-1 font-normal">CEO at Orbix Design studio</p>
       </div>
 
       <div class="border-t border-gray-100 mt-6 pt-5 flex items-center justify-between">
-        <span class="text-[15px] font-semibold text-[#9A9EA6]">Your Links</span>
+        <span class="text-[14px] font-normal text-[#9A9EA6]">Your Links</span>
         <div class="flex items-center gap-2.5">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#101112" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
             <line x1="12" y1="16" x2="12" y2="12"></line>
             <line x1="12" y1="8" x2="12.01" y2="8"></line>
           </svg>
-          <span class="text-[15px] text-[#101112] font-bold mr-1">Direct</span>
+          <span class="text-[14px] text-[#101112] font-medium mr-1">Direct</span>
           <div class="relative inline-block w-[44px] h-[26px] align-middle select-none">
             <input type="checkbox" name="toggle" id="toggle" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white appearance-none cursor-pointer opacity-0" checked/>
             <label for="toggle" class="toggle-label block overflow-hidden cursor-pointer"></label>
@@ -84,24 +93,20 @@
     </div>
   </div>
 
+  <!-- Add New Section -->
   <div class="px-6 mt-10 relative flex justify-between items-center z-10">
     <div class="max-w-[190px]">
-      <h3 class="text-[22px] font-extrabold text-[#101112]">Add New</h3>
-      <p class="text-[14px] text-[#9A9EA6] mt-1.5 font-medium leading-[1.4]">Add new link as a business or personal branding</p>
+      <h3 class="text-[18px] font-medium text-[#101112]">Add New</h3>
+      <p class="text-[13px] text-[#9A9EA6] mt-1 font-normal leading-[1.4]">Add new link as a business or personal branding</p>
     </div>
     
-    <div class="relative w-28 h-28 flex items-center justify-center mr-2">
-      <svg width="140" height="140" viewBox="0 0 100 100" class="absolute right-[-10px] top-[-15px] z-0 opacity-70" fill="none">
-        <path d="M 40 80 C 40 80, 20 70, 20 40 C 20 10, 60 10, 70 30 C 80 50, 70 70, 70 70 C 70 70, 60 90, 40 80" stroke="url(#paint0_linear)" stroke-width="20" stroke-linecap="round" filter="blur(2px)" />
-        <defs>
-          <linearGradient id="paint0_linear" x1="20" y1="20" x2="70" y2="80" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#ffffff" />
-            <stop offset="1" stop-color="#d1d5db" />
-          </linearGradient>
-        </defs>
+    <div class="relative w-[88px] h-[88px] flex items-center justify-center mr-2">
+      <!-- Swoosh Graphic -->
+      <svg width="120" height="120" viewBox="0 0 100 100" class="absolute right-[-15px] top-[-15px] z-0 opacity-40" fill="none">
+        <path d="M 40 80 C 40 80, 20 70, 20 40 C 20 10, 60 10, 70 30 C 80 50, 70 70, 70 70" stroke="#d1d5db" stroke-width="15" stroke-linecap="round" filter="blur(1px)" />
       </svg>
-      <button class="w-[72px] h-[72px] rounded-full bg-white smooth-shadow flex items-center justify-center z-10 relative text-[#101112]">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button class="w-[64px] h-[64px] rounded-full bg-white smooth-shadow flex items-center justify-center z-10 relative text-[#101112]">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <line x1="12" y1="5" x2="12" y2="19"></line>
           <line x1="5" y1="12" x2="19" y2="12"></line>
         </svg>
@@ -109,36 +114,28 @@
     </div>
   </div>
 
-  <div class="px-6 mt-6 grid grid-cols-2 gap-4 items-stretch h-full">
+  <!-- Two Columns -->
+  <div class="px-6 mt-6 grid grid-cols-2 gap-4 items-stretch">
     
+    <!-- Social Card & Button -->
     <div class="flex flex-col gap-4 h-full">
       <div class="bg-white rounded-[28px] smooth-shadow p-5 flex-1 flex flex-col justify-between">
         <div class="flex -space-x-2 overflow-hidden py-1">
-          <div class="w-8 h-8 rounded-full bg-[#E60023] ring-2 ring-white flex items-center justify-center shrink-0">
-            <svg class="w-4 h-4 text-white fill-current" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.163 0 7.398 2.967 7.398 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>
-          </div>
-          <div class="w-8 h-8 rounded-full bg-[#FFFC00] ring-2 ring-white flex items-center justify-center shrink-0">
-            <svg class="w-5 h-5 text-black fill-current" viewBox="0 0 24 24"><path d="M12.112 0c-1.579.034-3.407.411-4.73 1.171-1.353.774-2.502 2.193-2.879 3.69-.17.683-.178 1.488-.178 2.215v.984l-.326.151c-1.05.485-1.782.903-1.782 1.026 0 .093.896.653 1.42 1.005l.409.273-.393.359c-.58.528-1.554 1.564-1.782 1.895-.147.214-.236.421-.236.564 0 .349.52.741 1.066.804.303.036 1.433-.122 1.637-.229l.196-.104-.085.343c-.22.883-.553 1.581-.977 2.053-.454.505-1.261 1.127-1.788 1.385-.294.143-.377.202-.34.254.12.167 1.831.503 2.709.531.549.018 1.25-.091 1.76-.275.46-.167.621-.19.99-.138 1.127.155 2.651.937 4.103 2.105.518.416.985.839 1.033.937.078.156 1.341-.532 2.378-1.295 1.097-.808 2.228-1.879 3.29-3.111.458-.53 1.403-1.758 1.571-2.038.257-.428.17-.674-.383-.715-1.32-.097-2.735.617-2.915 1.472-.047.218-.01.272.238.35.698.218.435 1.077-.492 1.547-1.123.57-2.607 1.187-3.991 1.657-1.884.641-3.66 1.059-4.708 1.107-.905.042-1.734-.055-2.052-.24-.265-.155-.386-.345-.333-.518.066-.215.422-.442.879-.56.402-.104.937-.091 1.488.037.942.217 2.35.215 3.424-.004 1.341-.274 2.899-.861 4.141-1.558 1.082-.607 2.046-1.353 2.809-2.176.326-.352.92-1.094 1.099-1.378.113-.178.188-.356.17-.394-.031-.065-.246.009-.64.218-1.246.666-3.219.789-4.887.306-1.636-.474-3.28-1.705-4.439-3.32-.477-.665-.909-1.468-1.079-1.996l-.119-.371.218.175c.677.545 1.77.945 2.665.976.438.015.867-.044 1.258-.172.584-.191 1.05-.595 1.265-1.094.133-.311.135-.85.004-1.213-.198-.553-.668-.962-1.263-1.099-.395-.091-.892-.058-1.347.089-.968.314-1.988 1.002-2.586 1.745l-.213.264v-.966c0-.986.082-1.424.363-1.942.502-.924 1.493-1.897 2.505-2.464 1.173-.657 2.693-.951 4.113-.794 1.228.136 2.531.621 3.527 1.312 1.479 1.026 2.548 2.646 2.915 4.417.108.523.111 2.052.006 2.582-.132.664-.401 1.348-.711 1.808-.256.379-.652.793-1.042 1.088-.519.394-1.129.684-1.746.833-.679.164-1.503.14-2.152-.064-.467-.146-1.144-.482-1.391-.689l-.158-.133-.146.195c-.322.428-.85 1.121-1.175 1.543l-.131.17.202.128c1.177.747 2.455 1.157 3.755 1.206 1.782.068 3.551-.55 4.97-1.737 1.151-.963 2.115-2.316 2.664-3.738.257-.667.433-1.549.497-2.49.034-.515.034-2.023 0-2.537-.087-1.3-.393-2.528-.921-3.69-1.282-2.825-3.821-4.887-6.843-5.556-1.16-.257-2.618-.285-3.834-.073z"/></svg>
-          </div>
-          <div class="w-8 h-8 rounded-full bg-[#1DA1F2] ring-2 ring-white flex items-center justify-center shrink-0">
-            <svg class="w-4 h-4 text-white fill-current" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
-          </div>
-          <div class="w-8 h-8 rounded-full bg-[#0A66C2] ring-2 ring-white flex items-center justify-center shrink-0">
-            <svg class="w-4 h-4 text-white fill-current" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </div>
-          <div class="w-8 h-8 rounded-full bg-[#1877F2] ring-2 ring-white flex items-center justify-center shrink-0">
-            <svg class="w-4 h-4 text-white fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          </div>
+          <div class="w-[26px] h-[26px] rounded-full bg-[#E60023] ring-[1.5px] ring-white flex items-center justify-center text-white text-[10px] font-bold">P</div>
+          <div class="w-[26px] h-[26px] rounded-full bg-[#FFFC00] ring-[1.5px] ring-white flex items-center justify-center text-black text-[10px] font-bold">S</div>
+          <div class="w-[26px] h-[26px] rounded-full bg-[#1DA1F2] ring-[1.5px] ring-white flex items-center justify-center text-white text-[10px] font-bold">t</div>
+          <div class="w-[26px] h-[26px] rounded-full bg-[#0A66C2] ring-[1.5px] ring-white flex items-center justify-center text-white text-[9px] font-bold">in</div>
+          <div class="w-[26px] h-[26px] rounded-full bg-[#1877F2] ring-[1.5px] ring-white flex items-center justify-center text-white text-[10px] font-bold">f</div>
         </div>
         
         <div class="mt-4 pt-1">
-          <p class="text-[34px] font-extrabold text-[#101112] leading-none tracking-tight">05</p>
-          <p class="text-[13.5px] text-[#9A9EA6] font-medium mt-1.5">Active social link</p>
+          <p class="text-[32px] font-semibold text-[#101112] leading-none tracking-tight">05</p>
+          <p class="text-[12px] text-[#9A9EA6] font-normal mt-1.5">Active social link</p>
         </div>
       </div>
       
-      <button class="bg-[#C8F331] hover:bg-[#bde829] transition-colors rounded-[26px] h-16 w-full flex items-center justify-center gap-2.5 font-bold text-[16px] text-[#101112] shadow-sm">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button class="bg-[#C8F331] hover:bg-[#bde829] transition-colors rounded-[24px] h-[60px] w-full flex items-center justify-center gap-2 font-medium text-[14px] text-[#101112] smooth-shadow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 3h12l4 6-10 13L2 9Z"></path>
           <path d="M11 3 8 9l4 13"></path>
           <path d="M12 3v19"></path>
@@ -148,58 +145,78 @@
       </button>
     </div>
 
+    <!-- Recent Connected -->
     <div class="bg-white rounded-[28px] smooth-shadow p-5 h-full flex flex-col">
-      <h4 class="text-[14.5px] font-bold text-[#101112] mb-4 mt-1 tracking-tight">Recent connected</h4>
-      <div class="flex flex-col gap-4 flex-1 justify-between">
+      <h4 class="text-[13px] font-semibold text-[#101112] mb-4 mt-1">Recent connected</h4>
+      <div class="flex flex-col gap-[14px] flex-1">
         
         <div class="flex items-center justify-between w-full">
           <div class="flex items-center gap-2.5 min-w-0">
-            <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&auto=format&fit=crop&w=128&q=80" alt="Bessie" class="w-[34px] h-[34px] rounded-full object-cover flex-shrink-0" />
+            <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&auto=format&fit=crop&w=128&q=80" alt="Bessie" class="w-[30px] h-[30px] rounded-full object-cover flex-shrink-0" />
             <div class="min-w-0 flex-1">
-              <p class="text-[13.5px] font-bold text-[#101112] truncate">Bessie</p>
-              <p class="text-[11.5px] text-[#9A9EA6] font-medium truncate mt-0.5">Los Angeles, CA</p>
+              <p class="text-[12px] font-semibold text-[#101112] truncate">Bessie</p>
+              <p class="text-[10px] text-[#9A9EA6] font-normal truncate mt-0.5">Los Angeles, CA</p>
             </div>
           </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9A9EA6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 ml-1">
-            <circle cx="12" cy="5" r="1"></circle>
-            <circle cx="12" cy="12" r="1"></circle>
-            <circle cx="12" cy="19" r="1"></circle>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9A9EA6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
+            <circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle>
           </svg>
         </div>
         
         <div class="flex items-center justify-between w-full">
           <div class="flex items-center gap-2.5 min-w-0">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=128&q=80" alt="Julie" class="w-[34px] h-[34px] rounded-full object-cover flex-shrink-0" />
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=128&q=80" alt="Julie" class="w-[30px] h-[30px] rounded-full object-cover flex-shrink-0" />
             <div class="min-w-0 flex-1">
-              <p class="text-[13.5px] font-bold text-[#101112] truncate">Julie</p>
-              <p class="text-[11.5px] text-[#9A9EA6] font-medium truncate mt-0.5">Los Angeles, CA</p>
+              <p class="text-[12px] font-semibold text-[#101112] truncate">Julie</p>
+              <p class="text-[10px] text-[#9A9EA6] font-normal truncate mt-0.5">Los Angeles, CA</p>
             </div>
           </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9A9EA6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 ml-1">
-            <circle cx="12" cy="5" r="1"></circle>
-            <circle cx="12" cy="12" r="1"></circle>
-            <circle cx="12" cy="19" r="1"></circle>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9A9EA6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
+            <circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle>
           </svg>
         </div>
         
-        <div class="flex items-center justify-between w-full mb-1">
+        <div class="flex items-center justify-between w-full">
           <div class="flex items-center gap-2.5 min-w-0">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=128&q=80" alt="Regina" class="w-[34px] h-[34px] rounded-full object-cover flex-shrink-0" />
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=128&q=80" alt="Regina" class="w-[30px] h-[30px] rounded-full object-cover flex-shrink-0" />
             <div class="min-w-0 flex-1">
-              <p class="text-[13.5px] font-bold text-[#101112] truncate">Regina</p>
-              <p class="text-[11.5px] text-[#9A9EA6] font-medium truncate mt-0.5">Los Angeles, CA</p>
+              <p class="text-[12px] font-semibold text-[#101112] truncate">Regina</p>
+              <p class="text-[10px] text-[#9A9EA6] font-normal truncate mt-0.5">Los Angeles, CA</p>
             </div>
           </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9A9EA6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 ml-1">
-            <circle cx="12" cy="5" r="1"></circle>
-            <circle cx="12" cy="12" r="1"></circle>
-            <circle cx="12" cy="19" r="1"></circle>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9A9EA6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
+            <circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle>
           </svg>
         </div>
 
       </div>
     </div>
   </div>
+
+  <!-- Floating Liquid Glass Bottom Nav -->
+  <div class="absolute bottom-6 left-6 right-6 bg-white/75 backdrop-blur-xl border border-white/60 rounded-[30px] px-6 py-4 flex items-center justify-between shadow-[0_12px_40px_rgba(0,0,0,0.08)] z-50">
+    <a href="#" class="navbtn active">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="2" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="2" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="2" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="2" stroke="currentColor" stroke-width="2"/></svg>
+    </a>
+
+    <a href="#" class="navbtn">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </a>
+
+    <a href="#" class="bg-[#101112] text-white rounded-full px-5 py-3 flex items-center gap-2 shadow-lg transition hover:scale-105">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="13" rx="2.5" stroke="#c8f331" stroke-width="2"/><path d="M3 10h18" stroke="#c8f331" stroke-width="2"/></svg>
+      <span class="text-[14px] font-medium">Cards</span>
+    </a>
+
+    <a href="#" class="navbtn">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M19.4 13.5a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.9 2.9l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.6V20a2 2 0 11-4 0v-.2a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.9-2.9l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.6-1H4a2 2 0 110-4h.2a1.7 1.7 0 001.6-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.9-2.9l.1.1a1.7 1.7 0 001.9.3H10a1.7 1.7 0 001-1.6V4a2 2 0 114 0v.2a1.7 1.7 0 001 1.6 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.9 2.9l-.1.1a1.7 1.7 0 00-.3 1.9V10a1.7 1.7 0 001.6 1H20a2 2 0 110 4h-.2a1.7 1.7 0 00-1.6 1z" stroke="currentColor" stroke-width="1.8"/></svg>
+    </a>
+
+    <a href="#" class="navbtn flex items-center justify-center">
+      <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=128&q=80" class="w-[28px] h-[28px] rounded-full object-cover ring-2 ring-white/50"/>
+    </a>
+  </div>
+
 </div>
 
 </body>
