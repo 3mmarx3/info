@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>Orbix - Profile</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +12,7 @@
   * { font-family: 'Plus Jakarta Sans', sans-serif; }
   body { background: #E5E7EB; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
   .app-container { 
- width: 100%; margin: 0 auto; 
+    width: 100%; margin: 0 auto; 
     background: #F4F5F7; min-height: 100vh; position: relative; 
     overflow-y: auto; overflow-x: hidden; 
     -ms-overflow-style: none; scrollbar-width: none; 
@@ -68,6 +68,17 @@
   }
   .radar-btn::after { animation-delay: 1.5s; }
   .radar-btn svg { position: relative; z-index: 2; }
+
+  .prevent-select {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  
+  .modal-active {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+  }
 </style>
 </head>
 <body>
@@ -76,6 +87,7 @@
   
   <div class="px-5 pt-10 pb-[100px] flex flex-col gap-7">
     
+    <!-- Header -->
     <div class="flex items-center justify-between">
       <button class="w-[46px] h-[46px] rounded-full bg-white flex items-center justify-center text-[#101112]">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -92,6 +104,7 @@
       </button>
     </div>
 
+    <!-- Profile Section -->
     <div class="bg-white rounded-[32px] p-6 relative anim-profile shadow-sm">
       <div class="flex items-start justify-between">
         <div class="mt-2">
@@ -130,6 +143,7 @@
       </div>
     </div>
 
+    <!-- Add New Section -->
     <div class="relative flex justify-between items-center z-10 anim-add-new mt-2">
       <div class="max-w-[190px]">
         <h3 class="text-[18px] font-medium text-[#101112]">Add New</h3>
@@ -146,12 +160,14 @@
       </div>
     </div>
 
+    <!-- Cards Section -->
     <div class="grid grid-cols-2 gap-4 items-stretch anim-cards">
       
       <div class="flex flex-col gap-4 h-full">
-        <div class="bg-white rounded-[28px] p-5 flex-1 flex flex-col justify-between shadow-sm">
+        <!-- Social Card with Long Press -->
+        <div id="social-card" class="bg-white rounded-[28px] p-5 flex-1 flex flex-col justify-between shadow-sm cursor-pointer prevent-select transition-transform active:scale-95" oncontextmenu="return false;">
           
-          <div class="flex -space-x-2 overflow-hidden py-1">
+          <div class="flex -space-x-2 overflow-hidden py-1 pointer-events-none">
             <div class="w-[28px] h-[28px] rounded-full bg-[#E60023] ring-[2px] ring-white flex items-center justify-center text-white relative z-[5]">
               <i class="fa-brands fa-pinterest-p text-[14px]"></i>
             </div>
@@ -169,7 +185,7 @@
             </div>
           </div>
           
-          <div class="mt-4 pt-1">
+          <div class="mt-4 pt-1 pointer-events-none">
             <p class="text-[32px] font-semibold text-[#101112] leading-none tracking-tight">05</p>
             <p class="text-[12px] text-[#9A9EA6] font-normal mt-1.5">Active social link</p>
           </div>
@@ -186,6 +202,7 @@
         </button>
       </div>
 
+      <!-- Recent Connected Section -->
       <div class="bg-white rounded-[28px] p-5 h-full flex flex-col shadow-sm">
         <h4 class="text-[13px] font-semibold text-[#101112] mb-4 mt-1">Recent connected</h4>
         <div class="flex flex-col gap-[14px] flex-1">
@@ -202,7 +219,6 @@
               <circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle>
             </svg>
           </div>
-          
           <div class="flex items-center justify-between w-full">
             <div class="flex items-center gap-2.5 min-w-0">
               <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=128&q=80" alt="Julie" class="w-[30px] h-[30px] rounded-full object-cover flex-shrink-0" />
@@ -215,7 +231,6 @@
               <circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle>
             </svg>
           </div>
-          
           <div class="flex items-center justify-between w-full">
             <div class="flex items-center gap-2.5 min-w-0">
               <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=128&q=80" alt="Regina" class="w-[30px] h-[30px] rounded-full object-cover flex-shrink-0" />
@@ -235,48 +250,181 @@
 
   </div>
 
+  <!-- Bottom Nav -->
   <div class="absolute bottom-5 left-5 right-5 bg-white/85 backdrop-blur-xl border border-white/60 rounded-full px-5 py-2.5 flex items-center justify-between z-50 shadow-[0_8px_24px_rgba(0,0,0,0.05)] anim-nav">
-    
     <a href="#" class="navbtn active">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="#C8F331" stroke="#222" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-      </svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="#C8F331" stroke="#222" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
     </a>
-
     <a href="#" class="navbtn">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A9EA6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
-        <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
-        <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
-        <path d="M14 14h7v7h-7z"></path>
-        <path d="M14 18h7"></path>
-        <path d="M18 14v7"></path>
-      </svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A9EA6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><path d="M14 14h7v7h-7z"></path><path d="M14 18h7"></path><path d="M18 14v7"></path></svg>
     </a>
-
     <a href="#" class="w-[44px] h-[44px] bg-[#1a1b1e] rounded-full flex items-center justify-center transition hover:scale-105 shadow-md">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8f331" stroke-width="2.5" stroke-linecap="round">
-        <path d="M12 5v14M5 12h14"></path>
-      </svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8f331" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
     </a>
-
     <a href="#" class="navbtn">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A9EA6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="16" y="8" width="4" height="13" rx="1"></rect>
-        <rect x="10" y="4" width="4" height="17" rx="1"></rect>
-        <rect x="4" y="12" width="4" height="9" rx="1"></rect>
-      </svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A9EA6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="8" width="4" height="13" rx="1"></rect><rect x="10" y="4" width="4" height="17" rx="1"></rect><rect x="4" y="12" width="4" height="9" rx="1"></rect></svg>
     </a>
-
     <a href="#" class="navbtn">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A9EA6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-      </svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A9EA6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </a>
+  </div>
+
+  <!-- Modal -->
+  <div id="social-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-5 bg-[#101112]/20 backdrop-blur-xl transition-opacity duration-300 opacity-0">
+    <div id="modal-content" class="bg-white w-full max-w-[340px] rounded-[32px] p-6 relative transform scale-95 opacity-0 transition-all duration-300 ease-out shadow-[0_24px_48px_rgba(0,0,0,0.12)]">
+      
+      <!-- Close Button -->
+      <button id="close-modal" class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-[#F4F5F7] hover:bg-[#E3E5E9] text-[#9A9EA6] hover:text-[#101112] transition-colors">
+        <i class="fa-solid fa-xmark text-[14px]"></i>
+      </button>
+      
+      <h3 class="text-[19px] font-bold text-[#101112] mb-6 pl-1 tracking-tight">Active Links</h3>
+      
+      <!-- Links Container -->
+      <div class="flex flex-col gap-4">
+        
+        <!-- Pinterest -->
+        <a href="#" class="group flex items-center gap-3 w-full cursor-pointer">
+          <!-- Icon Floating Container -->
+          <div class="w-[50px] h-[50px] rounded-full bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)] border border-gray-100 flex items-center justify-center flex-shrink-0 group-hover:shadow-[0_6px_16px_rgba(0,0,0,0.1)] group-hover:-translate-y-0.5 transition-all duration-300 z-10">
+            <div class="w-[38px] h-[38px] rounded-full bg-[#E60023] flex items-center justify-center text-white">
+              <i class="fa-brands fa-pinterest-p text-[17px]"></i>
+            </div>
+          </div>
+          <!-- Text Box Container -->
+          <div class="flex-1 h-[50px] rounded-full bg-[#F4F5F7] group-hover:bg-white group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)] border border-transparent group-hover:border-gray-200 flex items-center justify-between px-4 transition-all duration-300">
+            <div class="flex flex-col justify-center">
+              <span class="font-bold text-[#101112] text-[14px] leading-tight">Pinterest</span>
+              <span class="text-[11px] text-[#9A9EA6] font-medium mt-0.5 tracking-wide">@robert_fox</span>
+            </div>
+            <div class="w-7 h-7 rounded-full bg-white group-hover:bg-[#101112] flex items-center justify-center shadow-sm transition-all duration-300">
+              <i class="fa-solid fa-arrow-right -rotate-45 text-[11px] text-[#101112] group-hover:text-white transition-colors"></i>
+            </div>
+          </div>
+        </a>
+        
+        <!-- Snapchat -->
+        <a href="#" class="group flex items-center gap-3 w-full cursor-pointer">
+          <!-- Icon Floating Container -->
+          <div class="w-[50px] h-[50px] rounded-full bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)] border border-gray-100 flex items-center justify-center flex-shrink-0 group-hover:shadow-[0_6px_16px_rgba(0,0,0,0.1)] group-hover:-translate-y-0.5 transition-all duration-300 z-10">
+            <div class="w-[38px] h-[38px] rounded-full bg-[#FFFC00] flex items-center justify-center text-black">
+              <i class="fa-brands fa-snapchat text-[17px]"></i>
+            </div>
+          </div>
+          <!-- Text Box Container -->
+          <div class="flex-1 h-[50px] rounded-full bg-[#F4F5F7] group-hover:bg-white group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)] border border-transparent group-hover:border-gray-200 flex items-center justify-between px-4 transition-all duration-300">
+            <div class="flex flex-col justify-center">
+              <span class="font-bold text-[#101112] text-[14px] leading-tight">Snapchat</span>
+              <span class="text-[11px] text-[#9A9EA6] font-medium mt-0.5 tracking-wide">@robert_fox</span>
+            </div>
+            <div class="w-7 h-7 rounded-full bg-white group-hover:bg-[#101112] flex items-center justify-center shadow-sm transition-all duration-300">
+              <i class="fa-solid fa-arrow-right -rotate-45 text-[11px] text-[#101112] group-hover:text-white transition-colors"></i>
+            </div>
+          </div>
+        </a>
+
+        <!-- Twitter -->
+        <a href="#" class="group flex items-center gap-3 w-full cursor-pointer">
+          <!-- Icon Floating Container -->
+          <div class="w-[50px] h-[50px] rounded-full bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)] border border-gray-100 flex items-center justify-center flex-shrink-0 group-hover:shadow-[0_6px_16px_rgba(0,0,0,0.1)] group-hover:-translate-y-0.5 transition-all duration-300 z-10">
+            <div class="w-[38px] h-[38px] rounded-full bg-[#1DA1F2] flex items-center justify-center text-white">
+              <i class="fa-brands fa-twitter text-[17px]"></i>
+            </div>
+          </div>
+          <!-- Text Box Container -->
+          <div class="flex-1 h-[50px] rounded-full bg-[#F4F5F7] group-hover:bg-white group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)] border border-transparent group-hover:border-gray-200 flex items-center justify-between px-4 transition-all duration-300">
+            <div class="flex flex-col justify-center">
+              <span class="font-bold text-[#101112] text-[14px] leading-tight">Twitter</span>
+              <span class="text-[11px] text-[#9A9EA6] font-medium mt-0.5 tracking-wide">@robert_fox</span>
+            </div>
+            <div class="w-7 h-7 rounded-full bg-white group-hover:bg-[#101112] flex items-center justify-center shadow-sm transition-all duration-300">
+              <i class="fa-solid fa-arrow-right -rotate-45 text-[11px] text-[#101112] group-hover:text-white transition-colors"></i>
+            </div>
+          </div>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="#" class="group flex items-center gap-3 w-full cursor-pointer">
+          <!-- Icon Floating Container -->
+          <div class="w-[50px] h-[50px] rounded-full bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)] border border-gray-100 flex items-center justify-center flex-shrink-0 group-hover:shadow-[0_6px_16px_rgba(0,0,0,0.1)] group-hover:-translate-y-0.5 transition-all duration-300 z-10">
+            <div class="w-[38px] h-[38px] rounded-full bg-[#0A66C2] flex items-center justify-center text-white">
+              <i class="fa-brands fa-linkedin-in text-[17px]"></i>
+            </div>
+          </div>
+          <!-- Text Box Container -->
+          <div class="flex-1 h-[50px] rounded-full bg-[#F4F5F7] group-hover:bg-white group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)] border border-transparent group-hover:border-gray-200 flex items-center justify-between px-4 transition-all duration-300">
+            <div class="flex flex-col justify-center">
+              <span class="font-bold text-[#101112] text-[14px] leading-tight">LinkedIn</span>
+              <span class="text-[11px] text-[#9A9EA6] font-medium mt-0.5 tracking-wide">@robert_fox</span>
+            </div>
+            <div class="w-7 h-7 rounded-full bg-white group-hover:bg-[#101112] flex items-center justify-center shadow-sm transition-all duration-300">
+              <i class="fa-solid fa-arrow-right -rotate-45 text-[11px] text-[#101112] group-hover:text-white transition-colors"></i>
+            </div>
+          </div>
+        </a>
+        
+      </div>
+    </div>
   </div>
 
 </div>
 
+<!-- Scripts for Long Press & Modal -->
+<script>
+  const socialCard = document.getElementById('social-card');
+  const modal = document.getElementById('social-modal');
+  const modalContent = document.getElementById('modal-content');
+  const closeModalBtn = document.getElementById('close-modal');
+  
+  let pressTimer;
+  const PRESS_DURATION = 400;
+
+  // فتح المودال
+  const openModal = () => {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    requestAnimationFrame(() => {
+      modal.classList.remove('opacity-0');
+      modalContent.classList.add('modal-active');
+    });
+  };
+
+  // إغلاق المودال
+  const closeModal = () => {
+    modal.classList.add('opacity-0');
+    modalContent.classList.remove('modal-active');
+    
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }, 300);
+  };
+
+  // أحداث الضغطة المطولة
+  const startPress = (e) => {
+    pressTimer = setTimeout(openModal, PRESS_DURATION);
+  };
+
+  const cancelPress = () => {
+    clearTimeout(pressTimer);
+  };
+
+  socialCard.addEventListener('mousedown', startPress);
+  socialCard.addEventListener('touchstart', startPress, {passive: true});
+  
+  socialCard.addEventListener('mouseup', cancelPress);
+  socialCard.addEventListener('mouseleave', cancelPress);
+  socialCard.addEventListener('touchend', cancelPress);
+  socialCard.addEventListener('touchcancel', cancelPress);
+
+  closeModalBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+</script>
 </body>
 </html>
